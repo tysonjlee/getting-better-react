@@ -7,7 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Build output
+build/
+*.min.css
 dist
 dist-ssr
 *.local
@@ -16,9 +18,22 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.swp
+*.swo
+Thumbs.db
+
+# Node modules and lockfile
+node_modules/
+package-lock.json
+
+# Personal Documentation 
+personal-docs
+
+# Tailwind CLI Output file (show publicly for now; remove comment later if wanting to hide)
+# output.css
+# ./css/output.css
