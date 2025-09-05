@@ -32,7 +32,7 @@ node_modules/
 package-lock.json
 
 # Personal Documentation 
-personal-docs
+personal_docs
 
 # Tailwind CLI Output file (show publicly for now; remove comment later if wanting to hide)
 # output.css
