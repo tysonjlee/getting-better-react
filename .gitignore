@@ -29,7 +29,6 @@ Thumbs.db
 
 # Node modules and lockfile
 node_modules/
-package-lock.json
 
 # Personal Documentation 
 personal_docs
