@@ -8,26 +8,26 @@ import { Button } from "@/components/ui/Button"
 import { IoMdCreate } from "react-icons/io";
 
 const navigationMenuItems = [
-  { title: "Home", href: "@/pages/Home" },
-  { title: "Notes Manager", href: "@/pages/Manager" },
+  { title: "Home", to: "/home" },
+  { title: "Notes Manager", to: "/manager" },
 ];
 
 function Navbar() {
   return (
     <nav className="flex flex-row items-center justify-between h-16 px-5 bg-slate-950">
       {/* Logo & Title*/}
-      <Link class="flex-none focus:outline-hidden focus:opacity-80 text-midnight-text" to="/pages/Home" aria-label="Getting Better">
-        <span class="inline-flex items-center gap-x-2 text-2xl font-medium text-midnight-text transition-all duration-200 hover:scale-110">
-          <img class="w-10 h-auto" src="/public/brand-logo.png" alt="Logo"/>
+      <Link className="flex-none focus:outline-hidden text-midnight-text" to="/home" aria-label="Getting Better">
+        <span className="inline-flex items-center gap-x-2 text-2xl font-medium text-midnight-text transition-all duration-200 hover:scale-110">
+          <img className="w-10 h-auto" src="/brand-logo.png" alt="Logo"/>
           Getting Better
         </span>
       </Link>
       {/* Items */}
       <div className="flex flex-row justify-end">
+        <Button className={navigationMenuTriggerStyle()}>
+          <IoMdCreate/> Create a Note
+        </Button>
         <NavigationMenu>
-          <Button className={navigationMenuTriggerStyle()}>
-            <IoMdCreate/> Create a Note
-          </Button>
           <NavigationMenuList>
             {navigationMenuItems.map((item) => (
               <NavigationMenuItem key={item.title}>
@@ -35,7 +35,7 @@ function Navbar() {
                   className={navigationMenuTriggerStyle()}
                   asChild
                 >
-                  <Link to={item.href}>{item.title}</Link>
+                  <Link to={item.to}>{item.title}</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
@@ -132,6 +132,4 @@ const NavigationMenuIndicator = React.forwardRef(({ className, ...props }, ref) 
 NavigationMenuIndicator.displayName =
   NavigationMenuPrimitive.Indicator.displayName
 
-export {
-  Navbar
-}
+export default Navbar
