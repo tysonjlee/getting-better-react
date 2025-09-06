@@ -3,8 +3,9 @@ import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"
 import { ChevronDown } from "lucide-react"
 import { Link } from "react-router-dom"
-
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/Button"
+import { IoMdCreate } from "react-icons/io";
 
 const navigationMenuItems = [
   { title: "Home", href: "@/pages/Home" },
@@ -13,22 +14,35 @@ const navigationMenuItems = [
 
 function Navbar() {
   return (
-    <div className="flex flex-row justify-end h-12 pr-2 bg-slate-950">
-      <NavigationMenu>
-        <NavigationMenuList>
-          {navigationMenuItems.map((item) => (
-            <NavigationMenuItem key={item.title}>
-              <NavigationMenuLink
-                className={navigationMenuTriggerStyle()}
-                asChild
-              >
-                <Link to={item.href}>{item.title}</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          ))}
-        </NavigationMenuList>
-      </NavigationMenu>
-    </div>
+    <nav className="flex flex-row items-center justify-between h-16 px-5 bg-slate-950">
+      {/* Logo & Title*/}
+      <Link class="flex-none focus:outline-hidden focus:opacity-80 text-midnight-text" to="/pages/Home" aria-label="Getting Better">
+        <span class="inline-flex items-center gap-x-2 text-2xl font-medium text-midnight-text transition-all duration-200 hover:scale-110">
+          <img class="w-10 h-auto" src="/public/brand-logo.png" alt="Logo"/>
+          Getting Better
+        </span>
+      </Link>
+      {/* Items */}
+      <div className="flex flex-row justify-end">
+        <NavigationMenu>
+          <Button className={navigationMenuTriggerStyle()}>
+            <IoMdCreate/> Create a Note
+          </Button>
+          <NavigationMenuList>
+            {navigationMenuItems.map((item) => (
+              <NavigationMenuItem key={item.title}>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyle()}
+                  asChild
+                >
+                  <Link to={item.href}>{item.title}</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+    </nav>
   );
 }
 
@@ -60,7 +74,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-8 w-max items-center justify-center rounded-md bg-slate-950 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent focus:bg-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-accent-foreground data-[state=open]:bg-accent/50 data-[state=open]:hover:bg-accent data-[state=open]:focus:bg-accent"
+  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-slate-950 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent focus:bg-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-accent-foreground data-[state=open]:bg-accent/50 data-[state=open]:hover:bg-accent data-[state=open]:focus:bg-accent"
 )
 
 const NavigationMenuTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
