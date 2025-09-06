@@ -13,7 +13,7 @@ const navigationMenuItems = [
 
 function Navbar() {
   return (
-    <div className="flex flex-row justify-end h-12 bg-slate-950">
+    <div className="flex flex-row justify-end h-12 pr-2 bg-slate-950">
       <NavigationMenu>
         <NavigationMenuList>
           {navigationMenuItems.map((item) => (
