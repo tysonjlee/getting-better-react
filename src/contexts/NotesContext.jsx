@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react'
+import { useState, useEffect, createContext, useContext } from 'react'
 
 export const initialNotesState = {
   byId: {}, // Single truth source 
@@ -26,10 +26,22 @@ export const initialNotesState = {
 export const NotesContext = createContext(null)
 
 export function NotesProvider({ children }) {
-  const [notesState, setNotesState] = useState(initialNotesState)
-  const providerValue = { notesState, setNotesState }
+  // Get notesState from localStorage or initialize if no localStorage
+  const [notesState, setNotesState] = useState(() => {
+    const stored = localStorage.getItem("notesState")
+    if (stored) return JSON.parse(stored)
+    else return initialNotesState
+  })
+
+  // Update localStorage whenever notesState changes
+  useEffect(() => {
+    localStorage.setItem("notesState", JSON.stringify(notesState))
+  }, [notesState])
+
+
+  // Return NotesContext provider
   return (
-    <NotesContext.Provider value={providerValue}>
+    <NotesContext.Provider value={{ notesState, setNotesState }}>
       {children}
     </NotesContext.Provider>
   ); 
