@@ -2,6 +2,21 @@ import { useState, createContext, useContext } from 'react'
 
 export const initialNotesState = {
   byId: {}, // Single truth source 
+  /**
+   * byId = {
+   *  "uniqueId1": {
+   *    "content": string
+   *    "createdAt": int (epoch)
+   *    "wasUpdated": boolean
+   *    "updatedAt": int (epoch) || null if not updated 
+   *    "lastChangeAt": int (epoch) [greatest of createdAt & updatedAt times]
+   *    "isDeleted": boolean
+   *    "deletedAt": int (epoch) || null if not deleted
+   *    "pinned": boolean
+   *   }
+   *   ...
+   * }
+   */
   byOrderActive: [],  // Descending by timestamp created/edited
   byOrderPinned: [],  // Descending by timestamp pinned
   byOrderDeleted: [], // Descending by timestamp deleted
