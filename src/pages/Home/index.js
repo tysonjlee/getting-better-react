@@ -1,3 +1,3 @@
-export { default as Home} from "./Home"
-export { default as Dashboard} from "./Dashboard"
-export { default as SearchQuery} from "./SearchQuery"
+export { default as Home } from './Home'
+export { default as Dashboard } from './Dashboard'
+export { default as SearchQuery } from './SearchQuery'

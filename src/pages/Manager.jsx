@@ -1,7 +1,5 @@
 function Manager() {
-  return (
-    <></>
-  ); 
+	return <></>
 }
 
 export default Manager

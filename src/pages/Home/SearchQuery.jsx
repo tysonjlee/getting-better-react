@@ -1,7 +1,5 @@
 function SearchQuery() {
-  return (
-    <></>
-  ); 
+	return <></>
 }
 
 export default SearchQuery
