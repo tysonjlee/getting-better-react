@@ -4,8 +4,7 @@ import { cva } from 'class-variance-authority'
 import { ChevronDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/Button'
-import { IoMdCreate } from 'react-icons/io'
+import CreateNoteDialog from '@/components/CreateNoteDiaglog'
 
 const navigationMenuItems = [
 	{ title: 'Home', to: '/home' },
@@ -16,21 +15,19 @@ function Navbar() {
 	return (
 		<nav className="flex flex-row items-center justify-between h-16 px-5 bg-slate-950">
 			{/* Logo & Title */}
-			<Link className="flex-none focus:outline-hidden text-midnight-text" to="/home" aria-label="Getting Better">
-				<span className="inline-flex items-center gap-x-2 text-2xl font-medium text-midnight-text transition-all duration-200 hover:scale-110">
+			<Link className="flex-none focus:outline-hidden" to="/home" aria-label="Getting Better">
+				<span className="inline-flex items-center gap-x-2 text-2xl font-medium text-foreground transition-all duration-200 hover:scale-110">
 					<img className="w-10 h-auto" src="/brand-logo.png" alt="Logo" />
 					Getting Better
 				</span>
 			</Link>
 			{/* Items */}
 			<div className="flex flex-row justify-end">
-				<Button className={navigationMenuTriggerStyle()}>
-					<IoMdCreate /> Create a Note
-				</Button>
+				<CreateNoteDialog className={navigationMenuTriggerStyle()}/>
 				<NavigationMenu>
 					<NavigationMenuList>
 						{navigationMenuItems.map((item) => (
-							<NavigationMenuItem key={item.title}>
+							<NavigationMenuItem key={item.title} className="text-foreground">
 								<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
 									<Link to={item.to}>{item.title}</Link>
 								</NavigationMenuLink>

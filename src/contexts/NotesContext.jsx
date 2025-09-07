@@ -5,6 +5,7 @@ export const initialNotesState = {
   /**
    * byId = {
    *  "uniqueId1": {
+   *    "id": uniqueId1
    *    "content": string
    *    "createdAt": int (epoch)
    *    "wasUpdated": boolean
