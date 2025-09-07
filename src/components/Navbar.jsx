@@ -15,17 +15,17 @@ const navigationMenuItems = [
 function Navbar() {
   return (
     <nav className="flex flex-row items-center justify-between h-16 px-5 bg-slate-950">
-      {/* Logo & Title*/}
+      {/* Logo & Title */}
       <Link className="flex-none focus:outline-hidden text-midnight-text" to="/home" aria-label="Getting Better">
         <span className="inline-flex items-center gap-x-2 text-2xl font-medium text-midnight-text transition-all duration-200 hover:scale-110">
-          <img className="w-10 h-auto" src="/brand-logo.png" alt="Logo"/>
+          <img className="w-10 h-auto" src="/brand-logo.png" alt="Logo" />
           Getting Better
         </span>
       </Link>
       {/* Items */}
       <div className="flex flex-row justify-end">
         <Button className={navigationMenuTriggerStyle()}>
-          <IoMdCreate/> Create a Note
+          <IoMdCreate /> Create a Note
         </Button>
         <NavigationMenu>
           <NavigationMenuList>
@@ -74,7 +74,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-slate-950 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent focus:bg-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-accent-foreground data-[state=open]:bg-accent/50 data-[state=open]:hover:bg-accent data-[state=open]:focus:bg-accent"
+  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-slate-950 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-accent-foreground data-[state=open]:bg-accent/50 data-[state=open]:hover:bg-accent data-[state=open]:focus:bg-accent"
 )
 
 const NavigationMenuTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
