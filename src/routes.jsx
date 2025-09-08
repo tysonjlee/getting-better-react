@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Home } from '@/pages/Home'
-import Manager from '@/pages/Manager'
+import { Manager } from '@/pages/Manager'
 
 function AppRoutes() {
 	return (

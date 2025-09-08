@@ -13,7 +13,7 @@ const navigationMenuItems = [
 
 function Navbar() {
 	return (
-		<nav className="flex flex-row items-center justify-between h-16 px-5 bg-slate-950">
+		<nav className="flex flex-row items-center justify-between h-16 px-5 bg-slate-950 border-b-4 border-black">
 			{/* Logo & Title */}
 			<Link className="flex-none focus:outline-hidden" to="/home" aria-label="Getting Better">
 				<span className="inline-flex items-center gap-x-2 text-2xl font-medium text-foreground transition-all duration-200 hover:scale-110">

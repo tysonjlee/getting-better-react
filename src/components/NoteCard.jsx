@@ -13,9 +13,9 @@ function NoteCard({ id }) {
   const note = notesState.byId[id]  
 
   return (
-    <Card>
-      <CardContent>
-        <p>{note.content}</p>
+    <Card className="flex flex-col items-center justify-center max-w-52 max-h-72 border-[3px] border-solid border-black rounded-lg bg-midnight-container transition-all duration-200 hover:scale-105">
+      <CardContent className="text-foreground">
+        {note.content}
       </CardContent>
     </Card>
   )
