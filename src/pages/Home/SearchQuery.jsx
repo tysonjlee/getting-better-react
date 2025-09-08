@@ -1,5 +1,11 @@
+import SectionTitle from "@/components/SectionTitle"
+
 function SearchQuery() {
-	return <></>
+	return ( 
+		<>
+			<SectionTitle title="Search Query"/>
+		</>
+	)
 }
 
 export default SearchQuery

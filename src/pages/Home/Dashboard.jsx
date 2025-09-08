@@ -1,8 +1,12 @@
 import NotesContainer from "@/components/NotesContainer"
+import SectionTitle from "@/components/SectionTitle"
 
 function Dashboard() {
 	return (
-		<NotesContainer />
+		<>
+			<SectionTitle title="Dashboard" />
+			<NotesContainer />
+		</>
 	)
 }
 
