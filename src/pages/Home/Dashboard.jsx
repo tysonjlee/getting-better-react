@@ -5,7 +5,7 @@ function Dashboard() {
 	return (
 		<>
 			<SectionTitle title="Dashboard" />
-			<NotesContainer />
+			<NotesContainer numNotes={4}/>
 		</>
 	)
 }
