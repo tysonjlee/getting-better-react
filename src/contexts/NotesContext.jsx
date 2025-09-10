@@ -38,10 +38,71 @@ export function NotesProvider({ children }) {
     localStorage.setItem("notesState", JSON.stringify(notesState))
   }, [notesState])
 
+  // Define delete, pin, & recover functions 
+  function deleteNote(id) {
+    // Get note 
+    const note = notesState.byId[id]
+
+    // Save new note information 
+    const newNote = {
+      ...note,
+      isDeleted: true, 
+      deletedAt: Date.now(), 
+      pinned: false
+    }
+
+    // Set notesState
+    setNotesState(prev => ({
+      ...prev, 
+      byId: { ...prev.byId, [id]: newNote }, 
+      byOrderActive: prev.byOrderActive.filter(noteId => noteId !== id), 
+      byOrderPinned: prev.byOrderPinned.filter(noteId => noteId !== id),
+      byOrderDeleted: [id, ...prev.byOrderDeleted.filter(noteId => noteId !== id)]
+    }))
+  }
+
+  function pinNote(id) {
+    // Get note 
+    const note = notesState.byId[id]
+
+    // Save new note information 
+    const newNote = {
+      ...note,
+      pinned: true
+    }
+
+    // Set notesState
+    setNotesState(prev => ({
+      ...prev, 
+      byId: { ...prev.byId, [id]: newNote }, 
+      byOrderPinned: [id, ...prev.byOrderPinned.filter(noteId => noteId !== id)],
+    }))
+  }
+
+  function recoverNote(id) {
+    // Get note 
+    const note = notesState.byId[id]
+
+    // Save new note information 
+    const newNote = {
+      ...note,
+      isDeleted: false, 
+      deletedAt: null, 
+    }
+
+    // Set notesState
+    setNotesState(prev => ({
+      ...prev, 
+      byId: { ...prev.byId, [id]: newNote }, 
+      byOrderActive: prev.byOrderActive.filter(noteId => noteId !== id), 
+      byOrderPinned: prev.byOrderPinned.filter(noteId => noteId !== id),
+      byOrderDeleted: [id, ...prev.byOrderDeleted.filter(noteId => noteId !== id)]
+    }))
+  }
 
   // Return NotesContext provider
   return (
-    <NotesContext.Provider value={{ notesState, setNotesState }}>
+    <NotesContext.Provider value={{ notesState, setNotesState, deleteNote, pinNote, recoverNote }}>
       {children}
     </NotesContext.Provider>
   ); 

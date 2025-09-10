@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -16,7 +17,9 @@ import {
 } from "@/components/ui/Card"
 import { Textarea } from "@/components/ui/Textarea"
 import { Button } from "@/components/ui/Button"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
+import NoteCardHeader from "@/components/notes/NoteCardHeader"
+import NoteCardFooter from "@/components/notes/NoteCardFooter" 
 import { useNotes } from "@/contexts/NotesContext"
 import { useState } from "react"
 
@@ -49,15 +52,11 @@ function NoteCard({ id }) {
     // Save new note information 
     const now = Date.now()
     const newNote = {
-      id: note.id, 
+      ...note,
       content: textareaContent, 
-      createdAt: note.createdAt,
       wasUpdated: true,   
       updatedAt: now, 
       lastChangeAt: now, 
-      isDeleted: note.isDeleted, 
-      deletedAt: note.deletedAt, 
-      pinned: note.pinned
     }
 
     // Set notesState
@@ -81,6 +80,7 @@ function NoteCard({ id }) {
       {/* Displayed Note Card */}
       <DialogTrigger>
         <Card className="flex flex-col items-center justify-center min-w-52 min-h-72 border-[3px] border-solid border-black rounded-lg bg-midnight-container transition-all duration-200 hover:scale-105">
+          <NoteCardHeader isPinned={note.isPinned} isDeleted={note.isDeleted}/>
           <CardContent className="text-foreground">
             {note.content}
           </CardContent>
@@ -89,7 +89,7 @@ function NoteCard({ id }) {
 
       {/* Note Modal */}
       <DialogContent className="flex flex-col items-center justify-center max-w-[80%] max-h-[60%] w-full h-full">
-        <DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[80%] w-full h-full">
+        <DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[40%] w-full h-full">
           <DialogTitle>Edit Note</DialogTitle>
           {renderSimilarityAlert()}
           <DialogDescription className="grid w-full gap-2">
@@ -100,6 +100,7 @@ function NoteCard({ id }) {
             <Button variant="outline" onClick={handleSaveNote} className="bg-foreground text-background">Save Note</Button>
           </DialogDescription>
         </DialogHeader>
+        <NoteCardFooter isDeleted={note.isDeleted} id={id}/>
       </DialogContent>
     </Dialog>
   )
