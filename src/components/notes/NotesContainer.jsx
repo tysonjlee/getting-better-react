@@ -1,4 +1,4 @@
-import NoteCard from "@/components/NoteCard"
+import NoteCard from "@/components/notes/NoteCard"
 import { useNotes } from "@/contexts/NotesContext"
 
 function NotesContainer({ numNotes }) {

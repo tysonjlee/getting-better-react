@@ -1,4 +1,4 @@
-import NotesContainer from "@/components/NotesContainer"
+import NotesContainer from "@/components/notes/NotesContainer"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { useNotes } from "@/contexts/NotesContext"
 
