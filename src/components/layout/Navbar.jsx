@@ -4,7 +4,7 @@ import { cva } from 'class-variance-authority'
 import { ChevronDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import CreateNoteDialog from '@/components/layout/CreateNoteDialog'
+import CreateNoteDialog from '@/components/notes/CreateNoteDialog'
 
 const navigationMenuItems = [
 	{ title: 'Home', to: '/home' },
