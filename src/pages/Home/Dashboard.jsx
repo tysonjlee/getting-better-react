@@ -1,5 +1,5 @@
 import NotesContainer from "@/components/NotesContainer"
-import SectionTitle from "@/components/SectionTitle"
+import SectionTitle from "@/components/layout/SectionTitle"
 
 function Dashboard() {
 	return (
