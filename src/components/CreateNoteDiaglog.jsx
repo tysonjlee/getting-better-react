@@ -20,7 +20,6 @@ function CreateNoteDialog () {
   const [showEmptyAlert, setShowEmptyAlert] = useState(false) // For tracking if the no message alert should show or not
 
   function renderEmptyAlert() {
-    console.log(showEmptyAlert)
     if (!showEmptyAlert) return null
     else return (
       <Alert variant="destructive">
