@@ -89,14 +89,14 @@ function NoteCard({ id }) {
 
       {/* Note Modal */}
       <DialogContent className="flex flex-col items-center justify-center max-w-[80%] max-h-[60%] w-full h-full">
-        <DialogHeader>
+        <DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[80%] w-full h-full">
           <DialogTitle>Edit Note</DialogTitle>
           {renderSimilarityAlert()}
           <DialogDescription className="grid w-full gap-2">
             <Textarea value={textareaContent} onChange={(event) => {
               setTextareaContent(event.target.value)
               if (showSimilarityAlert) setShowSimilarityAlert(false)
-            }} className="flex max-w-[100%] max-h-[100%] w-full h-full resize-none text-foreground"></Textarea>
+            }} className="flex w-full h-full resize-none text-foreground"></Textarea>
             <Button variant="outline" onClick={handleSaveNote} className="bg-foreground text-background">Save Note</Button>
           </DialogDescription>
         </DialogHeader>

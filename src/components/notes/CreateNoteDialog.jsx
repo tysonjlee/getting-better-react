@@ -75,14 +75,14 @@ function CreateNoteDialog () {
         <IoMdCreate className="w-5 h-5 pr-1"/> Create a Note
       </DialogTrigger>
       <DialogContent className="flex items-center justify-center max-w-[80%] max-h-[60%] w-full h-full">
-        <DialogHeader>
+        <DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[80%] w-full h-full">
           <DialogTitle>Create a Note</DialogTitle>
           {renderEmptyAlert()}
           <DialogDescription className="grid w-full gap-2">
             <Textarea placeholder="Write your note here..." value={textareaContent} onChange={(event) => {
               setTextareaContent(event.target.value)
               if (showEmptyAlert) setShowEmptyAlert(false)
-            }} className="flex max-w-[100%] max-h-[100%] w-full h-full resize-none text-foreground"/>
+            }} className="flex w-full h-full resize-none text-foreground"/>
             <Button variant="outline" onClick={handleSaveNote} className="bg-foreground text-background">Save Note</Button>
           </DialogDescription>
         </DialogHeader>
