@@ -7,11 +7,12 @@ function Manager() {
 	const { notesState } = useNotes()
 	const pinned = notesState.byOrderPinned
 	const active = notesState.byOrderActive
+	const deleted = notesState.byOrderDeleted
 
 	return (
 		<div className="flex flex-col justify-center items-center py-8">
 			<SectionTitle title="Notes Manager" />
-			<NotesContainer noteArrays={[pinned, active]}/>
+			<NotesContainer noteArrays={[pinned, active, deleted]}/>
 		</div>
 	)
 }
