@@ -17,7 +17,7 @@ function NoteCardDisplayHeader({ isPinned, isDeleted}) {
 
   // Return the display card header 
   return (
-    <CardHeader>
+    <CardHeader className="absolute top-[-15px] right-[-17px]">
       {determineIcon()}
     </CardHeader>
   )
