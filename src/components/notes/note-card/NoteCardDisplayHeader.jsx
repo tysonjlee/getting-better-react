@@ -1,15 +1,15 @@
 import { CardHeader } from "@/components/ui/Card" 
-import { BsFillPinAngleFill } from "react-icons/bs";
-import { CiTrash } from "react-icons/ci";
+import { BsPinAngle } from "react-icons/bs";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 function NoteCardDisplayHeader({ isPinned, isDeleted}) {
 
   function determineIcon() {
     // If pinned, show the pin icon 
-    if (isPinned) return <BsFillPinAngleFill color="red" />
+    if (isPinned) return <BsPinAngle color="red" />
     
     // If deleted, show the deleted icon 
-    else if (isDeleted) return <CiTrash color="red" />
+    else if (isDeleted) return <FaRegTrashAlt color="red" />
 
     // Otherwise, show no icon 
     else return 
