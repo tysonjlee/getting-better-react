@@ -100,7 +100,7 @@ function NoteCard({ id }) {
             <Button variant="outline" onClick={handleSaveNote} className="bg-foreground text-background">Save Note</Button>
           </DialogDescription>
         </DialogHeader>
-        <NoteCardFooter isDeleted={note.isDeleted} id={id}/>
+        <NoteCardFooter isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen}/>
       </DialogContent>
     </Dialog>
   )

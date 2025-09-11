@@ -3,12 +3,12 @@ import DeleteButton from "./buttons/DeleteButton"
 import PinButton from "./buttons/PinButton"
 import RecoverButton from "./buttons/RecoverButton"
 
-function NoteCardFooter({ isDeleted, id }) {
+function NoteCardFooter({ isDeleted, id, setDialogOpen }) {
   // If the note is deleted, return recover button 
   if (isDeleted) {
     return (
       <DialogFooter className="grid grid-cols-1">
-        <RecoverButton id={id}/>
+        <RecoverButton id={id} setDialogOpen={setDialogOpen}/>
       </DialogFooter>    
     )
   }
@@ -18,7 +18,7 @@ function NoteCardFooter({ isDeleted, id }) {
     return (
       <DialogFooter className="grid grid-cols-2 gap-2">
         <PinButton id={id}/>
-        <DeleteButton id={id}/>
+        <DeleteButton id={id} setDialogOpen={setDialogOpen}/>
       </DialogFooter>
     )
   }

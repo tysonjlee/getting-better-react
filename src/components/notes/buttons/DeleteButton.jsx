@@ -2,12 +2,15 @@ import { Button } from "@/components/ui/button";
 import { MdDeleteOutline } from "react-icons/md";
 import { useNotes } from "@/contexts/NotesContext";
 
-function DeleteButton({ id }) {
+function DeleteButton({ id, setDialogOpen }) {
   const { deleteNote } = useNotes()
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <Button className="rounded-full" size="icon" onClick={() => deleteNote(id)}>
+      <Button className="rounded-full" size="icon" onClick={() => {
+        deleteNote(id)
+        setDialogOpen(false)
+      }}>
         <MdDeleteOutline />
       </Button>
     </div>
