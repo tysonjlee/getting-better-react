@@ -60,7 +60,7 @@ function NoteCard({ id }) {
 		}))
 
 		// Reset states
-		setTextareaContent('')
+		setTextareaContent(newNote.content)
 		setDialogOpen(false)
 		setShowSimilarityAlert(false)
 	}
