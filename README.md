@@ -9,37 +9,36 @@ Getting Better is a simple note-taking web app focused on mental health self-ref
 This project makes use of the following third-party resources. All assets are used in compliance with their respective licenses.
 
 ### Images, Graphics, & Icons
-
 - [Line Awesome](https://icons8.com/line-awesome)
 
 ### Fonts
-
 - [Google Fonts](https://fonts.google.com/)
 
 ---
 
 ## Tech Stack
 
-### Languages
-
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-
-### Styling & UI
-
-- Tailwind CSS
-
-### Tools
-
+### Framework & Tooling
+- React
+- Vite 
 - Node.js & npm
+- VS Code
 - Tailwind CLI
+- PostCSS
+- Prettier
 - ESLint
 - HTMLHint
-- VS Code
+
+### Languages
+- JavaScript (ES6+)
+- HTML5 (via JSX)
+- CSS3
+
+### Styling & UI
+- Tailwind CSS v4 
+- shadcn/ui
 
 ### Version Control
-
 - Git/GitHub
 
 ---
