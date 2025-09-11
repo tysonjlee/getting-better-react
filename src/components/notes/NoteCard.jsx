@@ -80,7 +80,7 @@ function NoteCard({ id }) {
       {/* Displayed Note Card */}
       <DialogTrigger>
         <Card className="flex flex-col items-center justify-center min-w-52 min-h-72 border-[3px] border-solid border-black rounded-lg bg-midnight-container transition-all duration-200 hover:scale-105">
-          <NoteCardHeader isPinned={note.isPinned} isDeleted={note.isDeleted}/>
+          <NoteCardHeader isPinned={note.pinned} isDeleted={note.isDeleted}/>
           <CardContent className="text-foreground">
             {note.content}
           </CardContent>
