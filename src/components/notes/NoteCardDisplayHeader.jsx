@@ -2,7 +2,7 @@ import { CardHeader } from "@/components/ui/Card"
 import { BsFillPinAngleFill } from "react-icons/bs";
 import { CiTrash } from "react-icons/ci";
 
-function NoteCardHeader({ isPinned, isDeleted}) {
+function NoteCardDisplayHeader({ isPinned, isDeleted}) {
   // If pinned, show the pin icon 
   if (isPinned) {
     return (
@@ -28,4 +28,4 @@ function NoteCardHeader({ isPinned, isDeleted}) {
   
 }
 
-export default NoteCardHeader
+export default NoteCardDisplayHeader
