@@ -24,6 +24,12 @@ function NoteCard({ id }) {
 	const [dialogOpen, setDialogOpen] = useState(false)
 	const [showSimilarityAlert, setShowSimilarityAlert] = useState(false)
 
+	function determineTitle() {
+		if (!note.isDeleted) return "Edit Note" 
+		else return "Preview Note"
+	}
+
+
 	function renderSimilarityAlert() {
 		if (!showSimilarityAlert) return null
 		else
@@ -85,7 +91,7 @@ function NoteCard({ id }) {
 			<DialogContent className="flex flex-col items-center justify-center max-w-[80%] max-h-[60%] w-full h-full">
 				<NoteCardDialogMeta id={id} />
 				<DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[40%] w-full h-full">
-					<DialogTitle>Edit Note</DialogTitle>
+					<DialogTitle>{determineTitle()}</DialogTitle>
 					{renderSimilarityAlert()}
 					<DialogDescription className="grid w-full gap-2">
 						<Textarea
