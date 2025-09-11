@@ -23,7 +23,7 @@ function Navbar() {
 			</Link>
 			{/* Items */}
 			<div className="flex flex-row justify-end">
-				<CreateNoteDialog className={navigationMenuTriggerStyle()}/>
+				<CreateNoteDialog className={navigationMenuTriggerStyle()} />
 				<NavigationMenu>
 					<NavigationMenuList>
 						{navigationMenuItems.map((item) => (

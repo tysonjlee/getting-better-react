@@ -6,7 +6,7 @@ import AppRoutes from './routes'
 function App() {
 	return (
 		<NotesProvider>
-			<Navbar />      
+			<Navbar />
 			<AppRoutes />
 		</NotesProvider>
 	)

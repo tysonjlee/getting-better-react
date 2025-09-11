@@ -1,6 +1,6 @@
-import NotesContainer from "@/components/notes/NotesContainer"
-import SectionTitle from "@/components/layout/SectionTitle"
-import { useNotes } from "@/contexts/NotesContext"
+import NotesContainer from '@/components/notes/NotesContainer'
+import SectionTitle from '@/components/layout/SectionTitle'
+import { useNotes } from '@/contexts/NotesContext'
 
 function Manager() {
 	// Arrays for NotesContainer
@@ -12,7 +12,7 @@ function Manager() {
 	return (
 		<div className="flex flex-col justify-center items-center py-8">
 			<SectionTitle title="Notes Manager" />
-			<NotesContainer noteArrays={[pinned, active, deleted]}/>
+			<NotesContainer noteArrays={[pinned, active, deleted]} />
 		</div>
 	)
 }

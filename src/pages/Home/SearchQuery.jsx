@@ -1,9 +1,9 @@
-import SectionTitle from "@/components/layout/SectionTitle"
+import SectionTitle from '@/components/layout/SectionTitle'
 
 function SearchQuery() {
-	return ( 
+	return (
 		<>
-			<SectionTitle title="Search Query"/>
+			<SectionTitle title="Search Query" />
 		</>
 	)
 }

@@ -1,20 +1,24 @@
-import { Button } from "@/components/ui/button";
-import { MdDeleteOutline } from "react-icons/md";
-import { useNotes } from "@/contexts/NotesContext";
+import { Button } from '@/components/ui/button'
+import { MdDeleteOutline } from 'react-icons/md'
+import { useNotes } from '@/contexts/NotesContext'
 
 function DeleteButton({ id, setDialogOpen }) {
-  const { deleteNote } = useNotes()
+	const { deleteNote } = useNotes()
 
-  return (
-    <div className="flex items-center gap-2 flex-wrap">
-      <Button className="rounded-full" size="icon" onClick={() => {
-        deleteNote(id)
-        setDialogOpen(false)
-      }}>
-        <MdDeleteOutline />
-      </Button>
-    </div>
-  )
+	return (
+		<div className="flex items-center gap-2 flex-wrap">
+			<Button
+				className="rounded-full"
+				size="icon"
+				onClick={() => {
+					deleteNote(id)
+					setDialogOpen(false)
+				}}
+			>
+				<MdDeleteOutline />
+			</Button>
+		</div>
+	)
 }
 
-export default DeleteButton;
+export default DeleteButton
