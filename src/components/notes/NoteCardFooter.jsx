@@ -2,13 +2,16 @@ import { DialogFooter } from "@/components/ui/Dialog"
 import DeleteButton from "./buttons/DeleteButton"
 import PinButton from "./buttons/PinButton"
 import RecoverButton from "./buttons/RecoverButton"
+import { useNotes } from "@/contexts/NotesContext"
 
 function NoteCardFooter({ isDeleted, id }) {
+  const { recoverNote, togglePin, deleteNote } = useNotes()
+
   // If the note is deleted, return recover button 
   if (isDeleted) {
     return (
       <DialogFooter className="grid grid-cols-1">
-        <RecoverButton id={id}/>
+        <RecoverButton onClick={() => recoverNote(id)}/>
       </DialogFooter>    
     )
   }
@@ -17,8 +20,8 @@ function NoteCardFooter({ isDeleted, id }) {
   else {
     return (
       <DialogFooter className="grid grid-cols-2 gap-2">
-        <PinButton id={id}/>
-        <DeleteButton id={id}/>
+        <PinButton onClick={() => togglePin(id)}/>
+        <DeleteButton onClick={() => deleteNote(id)}/>
       </DialogFooter>
     )
   }

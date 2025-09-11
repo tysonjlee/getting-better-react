@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { CiUndo } from "react-icons/ci";
 
-function RecoverButton ({ id }) {
+function RecoverButton () {
   return (
     <div className="flex items-center gap-2 flex-wrap">
       <Button className="rounded-full" size="icon">
