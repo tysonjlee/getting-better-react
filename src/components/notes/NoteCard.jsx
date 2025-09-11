@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/Textarea"
 import { Button } from "@/components/ui/Button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
 import NoteCardDisplayHeader from "@/components/notes/NoteCardDisplayHeader"
-import NoteCardFooter from "@/components/notes/NoteCardFooter" 
+import NoteCardDialogFooter from "@/components/notes/NoteCardDialogFooter" 
 import { useNotes } from "@/contexts/NotesContext"
 import { useState } from "react"
 
@@ -100,7 +100,7 @@ function NoteCard({ id }) {
             <Button variant="outline" onClick={handleSaveNote} className="bg-foreground text-background">Save Note</Button>
           </DialogDescription>
         </DialogHeader>
-        <NoteCardFooter isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen}/>
+        <NoteCardDialogFooter isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen}/>
       </DialogContent>
     </Dialog>
   )

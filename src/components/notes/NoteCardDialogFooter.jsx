@@ -3,7 +3,7 @@ import DeleteButton from "./buttons/DeleteButton"
 import PinButton from "./buttons/PinButton"
 import RecoverButton from "./buttons/RecoverButton"
 
-function NoteCardFooter({ isDeleted, id, setDialogOpen }) {
+function NoteCardDialogFooter({ isDeleted, id, setDialogOpen }) {
   // If the note is deleted, return recover button 
   if (isDeleted) {
     return (
@@ -24,4 +24,4 @@ function NoteCardFooter({ isDeleted, id, setDialogOpen }) {
   }
 }
 
-export default NoteCardFooter
+export default NoteCardDialogFooter
