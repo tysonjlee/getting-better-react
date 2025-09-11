@@ -2,7 +2,10 @@ import NoteCard from "@/components/notes/NoteCard"
 import PropTypes from 'prop-types'
 
 function NotesContainer({ noteArrays, limit }) {
-	const uniqueIds = [...new Set(noteArrays.flat())].slice(0, limit)
+	let uniqueIds = [...new Set(noteArrays.flat())]
+  if (limit !== undefined) {
+    uniqueIds = uniqueIds.slice(0, limit)
+  }
 
   return (
 		<div className="flex flex-row justify-center content-center items-center flex-wrap max-w-[90%] max-h-[90%] w-full h-full py-5 gap-5"> {/* Notes Container */}
