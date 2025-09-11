@@ -1,4 +1,4 @@
-import NoteCard from "@/components/notes/NoteCard"
+import NoteCard from "@/components/notes/note-card/NoteCard"
 import PropTypes from 'prop-types'
 
 function NotesContainer({ noteArrays, limit }) {

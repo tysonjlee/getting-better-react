@@ -18,8 +18,9 @@ import {
 import { Textarea } from "@/components/ui/Textarea"
 import { Button } from "@/components/ui/Button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
-import NoteCardDisplayHeader from "@/components/notes/NoteCardDisplayHeader"
-import NoteCardDialogFooter from "@/components/notes/NoteCardDialogFooter" 
+import NoteCardDisplayHeader from "@/components/notes/note-card/NoteCardDisplayHeader"
+import NoteCardDialogFooter from "@/components/notes/note-card/NoteCardDialogFooter" 
+import NoteCardDialogMeta from "@/components/notes/note-card/NoteCardDialogMeta"
 import { useNotes } from "@/contexts/NotesContext"
 import { useState } from "react"
 
@@ -89,6 +90,7 @@ function NoteCard({ id }) {
 
       {/* Note Modal */}
       <DialogContent className="flex flex-col items-center justify-center max-w-[80%] max-h-[60%] w-full h-full">
+        <NoteCardDialogMeta />
         <DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[40%] w-full h-full">
           <DialogTitle>Edit Note</DialogTitle>
           {renderSimilarityAlert()}
