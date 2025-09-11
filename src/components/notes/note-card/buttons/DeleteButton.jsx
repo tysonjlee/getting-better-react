@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { MdDeleteOutline } from 'react-icons/md'
 import { useNotes } from '@/contexts/NotesContext'
 
-function DeleteButton({ id, setDialogOpen }) {
+function DeleteButton({ id, setDialogOpen, setShowSaveButton }) {
 	const { deleteNote } = useNotes()
 
 	return (
@@ -13,6 +13,7 @@ function DeleteButton({ id, setDialogOpen }) {
 				onClick={() => {
 					deleteNote(id)
 					setDialogOpen(false)
+					setShowSaveButton(false)
 				}}
 			>
 				<MdDeleteOutline />

@@ -23,12 +23,12 @@ function NoteCard({ id }) {
 	const [textareaContent, setTextareaContent] = useState(note.content)
 	const [dialogOpen, setDialogOpen] = useState(false)
 	const [showSimilarityAlert, setShowSimilarityAlert] = useState(false)
+	const [showSaveButton, setShowSaveButton] = useState(!note.isDeleted)
 
 	function determineTitle() {
 		if (!note.isDeleted) return "Edit Note" 
 		else return "Preview Note"
 	}
-
 
 	function renderSimilarityAlert() {
 		if (!showSimilarityAlert) return null
@@ -39,6 +39,17 @@ function NoteCard({ id }) {
 					<AlertDescription>The message is the same.</AlertDescription>
 				</Alert>
 			)
+	}
+
+	function renderSaveButton() {
+		if (showSaveButton) {
+			return (
+				<Button variant="outline" onClick={handleSaveNote} className="bg-foreground text-background">
+					Save Note
+				</Button>
+			)
+		}
+		else return <></>
 	}
 
 	function handleSaveNote() {
@@ -102,12 +113,10 @@ function NoteCard({ id }) {
 							}}
 							className="flex w-full h-full resize-none text-foreground"
 						></Textarea>
-						<Button variant="outline" onClick={handleSaveNote} className="bg-foreground text-background">
-							Save Note
-						</Button>
+						{renderSaveButton()}
 					</DialogDescription>
 				</DialogHeader>
-				<NoteCardDialogFooter isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen} />
+				<NoteCardDialogFooter isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
 			</DialogContent>
 		</Dialog>
 	)
