@@ -11,9 +11,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Textarea } from '@/components/ui/Textarea'
 import { Button } from '@/components/ui/Button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
-import NoteCardDisplayStatus from '@/components/notes/note-card/NoteCardDisplayStatus'
+import NoteCardDisplayStatus from '@/components/notes/note-card/note-card-display/NoteCardDisplayStatus'
 import NoteCardDialogButtons from '@/components/notes/note-card/buttons/NoteCardDialogButtons'
-import NoteCardDialogMeta from '@/components/notes/note-card/NoteCardDialogMeta'
+import NoteCardDialogMeta from '@/components/notes/note-card/note-card-dialog/NoteCardDialogMeta'
 import { useNotes } from '@/contexts/NotesContext'
 import { useState } from 'react'
 

@@ -1,5 +1,5 @@
-import NoteCardDialogTimestamp from '@/components/notes/note-card/NoteCardDialogTimestamp'
-import NoteCardDialogStatus from '@/components/notes/note-card/NoteCardDialogStatus'
+import NoteCardDialogTimestamp from '@/components/notes/note-card/note-card-dialog/NoteCardDialogTimestamp'
+import NoteCardDialogStatus from '@/components/notes/note-card/note-card-dialog/NoteCardDialogStatus'
 
 function NoteCardDialogMeta({ id }) {
 	return (
