@@ -1,7 +1,7 @@
 import { DialogFooter } from '@/components/ui/Dialog'
-import DeleteButton from '@/components/notes/note-card/note-card-ui/DeleteButton'
-import PinButton from '@/components/notes/note-card/note-card-ui/PinButton'
-import RecoverButton from '@/components/notes/note-card/note-card-ui/RecoverButton'
+import DeleteButton from '@/components/notes/note-card/button-ui/DeleteButton'
+import PinButton from '@/components/notes/note-card/button-ui/PinButton'
+import RecoverButton from '@/components/notes/note-card/button-ui/RecoverButton'
 
 function NoteCardDialogButtons({ isDeleted, id, setDialogOpen, setShowSaveButton }) {
 	// If the note is deleted, return recover button

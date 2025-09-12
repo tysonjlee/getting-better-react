@@ -1,5 +1,5 @@
 import { useNotes } from "@/contexts/NotesContext"
-import Tag from "@/components/notes/note-card/note-card-ui/Tag"
+import Tag from "@/components/notes/note-card/tag-ui/Tag"
 import {
   Popover,
   PopoverContent,
