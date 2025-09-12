@@ -104,7 +104,7 @@ function NoteCard({ id }) {
 			{/* Note Modal */}
 			<DialogContent className="flex flex-col items-center justify-center max-w-[80%] max-h-[60%] w-full h-full">
 				<NoteCardDialogMeta id={id} />
-				<DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[40%] w-full h-full">
+				<DialogHeader className="flex flex-col justify-center max-w-[60%] max-h-[30%] w-full h-full">
 					<DialogTitle>{determineTitle()}</DialogTitle>
 					{renderSimilarityAlert()}
 					<DialogDescription className="grid w-full gap-2">
