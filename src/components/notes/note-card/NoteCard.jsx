@@ -119,7 +119,7 @@ function NoteCard({ id }) {
 						{renderSaveButton()}
 					</DialogDescription>
 				</DialogHeader>
-				<NoteCardDialogTags />
+				<NoteCardDialogTags id={id}/>
 				<NoteCardDialogButtons isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
 			</DialogContent>
 		</Dialog>
