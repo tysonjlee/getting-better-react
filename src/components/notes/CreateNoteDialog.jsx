@@ -49,7 +49,8 @@ function CreateNoteDialog() {
 			lastChangeAt: now,
 			isDeleted: false,
 			deletedAt: null,
-			pinned: false
+			pinned: false,
+			tags: []
 		}
 
 		// Set notesState
