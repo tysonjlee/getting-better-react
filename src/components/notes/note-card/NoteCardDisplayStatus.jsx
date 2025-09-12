@@ -2,7 +2,7 @@ import { CardHeader } from '@/components/ui/Card'
 import { BsPinAngle } from 'react-icons/bs'
 import { FaRegTrashAlt } from 'react-icons/fa'
 
-function NoteCardDisplayHeader({ isPinned, isDeleted }) {
+function NoteCardDisplayStatus({ isPinned, isDeleted }) {
 	function determineIcon() {
 		// If pinned, show the pin icon
 		if (isPinned) return <BsPinAngle color="red" />
@@ -16,4 +16,4 @@ function NoteCardDisplayHeader({ isPinned, isDeleted }) {
 	return <CardHeader className="absolute top-[-15px] right-[-17px]">{determineIcon()}</CardHeader>
 }
 
-export default NoteCardDisplayHeader
+export default NoteCardDisplayStatus

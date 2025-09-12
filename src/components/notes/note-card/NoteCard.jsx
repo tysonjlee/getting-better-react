@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Textarea } from '@/components/ui/Textarea'
 import { Button } from '@/components/ui/Button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
-import NoteCardDisplayHeader from '@/components/notes/note-card/NoteCardDisplayHeader'
+import NoteCardDisplayStatus from '@/components/notes/note-card/NoteCardDisplayStatus'
 import NoteCardDialogFooter from '@/components/notes/note-card/NoteCardDialogFooter'
 import NoteCardDialogMeta from '@/components/notes/note-card/NoteCardDialogMeta'
 import { useNotes } from '@/contexts/NotesContext'
@@ -93,7 +93,7 @@ function NoteCard({ id }) {
 			{/* Displayed Note Card */}
 			<DialogTrigger>
 				<Card className="relative flex flex-col items-center justify-center min-w-72 min-h-40 border-[3px] border-solid border-black rounded-lg bg-midnight-container transition-all duration-200 hover:scale-105">
-					<NoteCardDisplayHeader isPinned={note.pinned} isDeleted={note.isDeleted} />
+					<NoteCardDisplayStatus isPinned={note.pinned} isDeleted={note.isDeleted} />
 					<CardContent className="text-foreground pt-5">{note.content}</CardContent>
 				</Card>
 			</DialogTrigger>
