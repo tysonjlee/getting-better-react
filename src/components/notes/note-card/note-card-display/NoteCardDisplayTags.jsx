@@ -1,6 +1,6 @@
 function NoteCardDisplayTags({ id }) {
   return (
-    
+    <></>
   )
 }
 
