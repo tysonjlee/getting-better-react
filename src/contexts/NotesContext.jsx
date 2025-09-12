@@ -24,7 +24,7 @@ export const initialNotesState = {
 	byOrderDeleted: [] // Descending by timestamp deleted
 }
 
-const tagNames = [
+export const tagNames = [
   "Anxiety",
   "Depression",
   "Stress",
