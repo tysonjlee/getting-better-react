@@ -15,6 +15,7 @@ import NoteCardDisplayStatus from '@/components/notes/note-card/note-card-displa
 import NoteCardDisplayTags from '@/components/notes/note-card/note-card-display/NoteCardDisplayTags'
 import NoteCardDialogButtons from '@/components/notes/note-card/buttons/NoteCardDialogButtons'
 import NoteCardDialogMeta from '@/components/notes/note-card/note-card-dialog/NoteCardDialogMeta'
+import NoteCardDialogTags from '@/components/notes/note-card/note-card-dialog/NoteCardDialogTags'
 import { useNotes } from '@/contexts/NotesContext'
 import { useState } from 'react'
 
@@ -118,6 +119,7 @@ function NoteCard({ id }) {
 						{renderSaveButton()}
 					</DialogDescription>
 				</DialogHeader>
+				<NoteCardDialogTags />
 				<NoteCardDialogButtons isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
 			</DialogContent>
 		</Dialog>
