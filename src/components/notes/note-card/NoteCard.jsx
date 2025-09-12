@@ -12,7 +12,7 @@ import { Textarea } from '@/components/ui/Textarea'
 import { Button } from '@/components/ui/Button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
 import NoteCardDisplayStatus from '@/components/notes/note-card/NoteCardDisplayStatus'
-import NoteCardDialogFooter from '@/components/notes/note-card/NoteCardDialogFooter'
+import NoteCardDialogButtons from '@/components/notes/note-card/NoteCardDialogButtons'
 import NoteCardDialogMeta from '@/components/notes/note-card/NoteCardDialogMeta'
 import { useNotes } from '@/contexts/NotesContext'
 import { useState } from 'react'
@@ -116,7 +116,7 @@ function NoteCard({ id }) {
 						{renderSaveButton()}
 					</DialogDescription>
 				</DialogHeader>
-				<NoteCardDialogFooter isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
+				<NoteCardDialogButtons isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
 			</DialogContent>
 		</Dialog>
 	)
