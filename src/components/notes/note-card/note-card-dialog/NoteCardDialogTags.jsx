@@ -1,5 +1,10 @@
 import { useNotes } from "@/contexts/NotesContext"
 import Tag from "@/components/notes/note-card/note-card-ui/Tag"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { LuCircleFadingPlus } from "react-icons/lu";
 
 function NoteCardDialogTags({ id }) {
@@ -15,9 +20,16 @@ function NoteCardDialogTags({ id }) {
       ))}      
 
       {/* Add Tag */}
-      <button>
-        <LuCircleFadingPlus size={18}/>
-      </button>
+      <Popover>
+        <PopoverTrigger asChild>
+          <button>
+            <LuCircleFadingPlus size={18} />
+          </button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <p>This is a test</p>
+        </PopoverContent>
+      </Popover>
     </div>
   )
 }
