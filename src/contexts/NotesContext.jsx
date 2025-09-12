@@ -14,6 +14,7 @@ export const initialNotesState = {
 	 *    "isDeleted": boolean
 	 *    "deletedAt": int (epoch) || null if not deleted
 	 *    "pinned": boolean
+	 * 		"tags": array of strings 
 	 *   }
 	 *   ...
 	 * }
