@@ -70,7 +70,6 @@ export const tagNames = [
   "Financial Stress",
   "Life Transitions",
   "Identity",
-  "Perfectionism",
   "Crisis",
   "Mental Exhaustion",
   "Overwhelm",
