@@ -4,8 +4,9 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/Popover"
 import { LuCircleFadingPlus } from "react-icons/lu";
+import TagAddMenu from "@/components/notes/note-card/tag-ui/TagAddMenu";
 
 function NoteCardDialogTags({ id }) {
   const { notesState } = useNotes()
@@ -19,15 +20,15 @@ function NoteCardDialogTags({ id }) {
         <Tag key={tag} tag={tag}/>
       ))}      
 
-      {/* Add Tag */}
+      {/* Add Tag Button */}
       <Popover>
         <PopoverTrigger asChild>
           <button>
             <LuCircleFadingPlus size={18} />
           </button>
         </PopoverTrigger>
-        <PopoverContent>
-          <p>This is a test</p>
+        <PopoverContent className="flex max-h-44 resize-none overflow-y-auto mt-3 bg-slate-950">
+          <TagAddMenu />
         </PopoverContent>
       </Popover>
     </div>
