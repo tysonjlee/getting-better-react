@@ -28,12 +28,13 @@ function Tag({ tag, mode, id }) {
 
     // Add the tag to the note 
     note.tags.unshift(tag)
-    
   }
 
   function handleTagDelete(tag) {
     /** @note For the note dialog tags */
-    
+
+    // Delete the tag from the note
+    note.tags.splice(note.tags.indexOf(tag), 1)
   }    
 
   return (
