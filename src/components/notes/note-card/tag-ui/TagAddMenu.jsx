@@ -12,7 +12,7 @@ import {
 import { tagNames } from "@/contexts/NotesContext"
 import Tag from "@/components/notes/note-card/tag-ui/Tag"
 
-function TagAddMenu() {
+function TagAddMenu({ id }) {
 
 
   return (
@@ -21,7 +21,7 @@ function TagAddMenu() {
       <CommandList>
         <CommandGroup heading="Tags">
           {tagNames.map((tag) => (
-            <Tag key={tag} tag={tag} icon="add"/>
+            <Tag key={tag} tag={tag} mode="add" id={id}/>
           ))}
         </CommandGroup>
       </CommandList>

@@ -17,7 +17,7 @@ function NoteCardDialogTags({ id }) {
     <div className="flex flex-row items-center flex-wrap min-w-[60%] gap-3">
       {/* Individual Tags */}
       {tags.map((tag) => (
-        <Tag key={tag} tag={tag} icon="delete"/>
+        <Tag key={tag} tag={tag} mode="delete" id={id}/>
       ))}      
 
       {/* Add Tag Button */}
@@ -28,7 +28,7 @@ function NoteCardDialogTags({ id }) {
           </button>
         </PopoverTrigger>
         <PopoverContent className="flex max-h-44 resize-none overflow-y-auto mt-3 bg-slate-950">
-          <TagAddMenu />
+          <TagAddMenu id={id}/>
         </PopoverContent>
       </Popover>
     </div>
