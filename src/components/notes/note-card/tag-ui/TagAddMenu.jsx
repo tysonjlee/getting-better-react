@@ -21,7 +21,7 @@ function TagAddMenu() {
       <CommandList>
         <CommandGroup heading="Tags">
           {tagNames.map((tag) => (
-            <Tag key={tag} tag={tag} />
+            <Tag key={tag} tag={tag} icon="add"/>
           ))}
         </CommandGroup>
       </CommandList>

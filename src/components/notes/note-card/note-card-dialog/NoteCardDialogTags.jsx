@@ -17,7 +17,7 @@ function NoteCardDialogTags({ id }) {
     <div className="flex flex-row items-center flex-wrap min-w-[60%] gap-3">
       {/* Individual Tags */}
       {tags.map((tag) => (
-        <Tag key={tag} tag={tag}/>
+        <Tag key={tag} tag={tag} icon="delete"/>
       ))}      
 
       {/* Add Tag Button */}
