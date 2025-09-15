@@ -81,8 +81,8 @@ export const NotesContext = createContext(null)
 export function NotesProvider({ children }) {
 	// Get notesState from localStorage or initialize if no localStorage
 	const [notesState, setNotesState] = useState(() => {
-		const stored = localStorage.getItem('notesState')
-		if (stored) return JSON.parse(stored)
+		const storedNotesState = localStorage.getItem('notesState')
+		if (storedNotesState) return JSON.parse(storedNotesState)
 		else return initialNotesState
 	})
 
