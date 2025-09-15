@@ -4,7 +4,7 @@ import { FiPlus } from "react-icons/fi";
 import { useNotes } from "@/contexts/NotesContext";
 
 function Tag({ tag, mode, id }) {
-  const { notesState } = useNotes()
+  const { notesState, setNotesState } = useNotes()
   const note = notesState.byId[id]
 
   function determineIcon() {
@@ -12,12 +12,12 @@ function Tag({ tag, mode, id }) {
     else if (mode === "add") return <FiPlus size={15}/>
   }
 
-  function determineTagAction(tag, id) {
-    if (mode === "delete") return handleTagDelete(tag, id)
-    else if (mode === "add") return handleTagAdd(tag, id)
+  function determineTagAction(tag) {
+    if (mode === "delete") return handleTagDelete(tag)
+    else if (mode === "add") return handleTagAdd(tag)
   }
 
-  function handleTagAdd(tag, id) {
+  function handleTagAdd(tag) {
     /** @note For the Tag Add Menu */
     
     // If the tag is already on the note, throw a warning & exit
@@ -26,21 +26,39 @@ function Tag({ tag, mode, id }) {
       return 
     }
 
-    // Add the tag to the note 
-    note.tags.unshift(tag)
+    // Create new note w/ new tag
+    const newNote = {
+      ...note, 
+      tags: [...note.tags, tag]
+    }
+
+    // Set notesState 
+    setNotesState((prev) => ({
+      ...prev, 
+      byId: {...prev.byId, [id]: newNote}
+    }))
   }
 
   function handleTagDelete(tag) {
     /** @note For the note dialog tags */
 
-    // Delete the tag from the note
-    note.tags.splice(note.tags.indexOf(tag), 1)
+    // Create new note w/o tag 
+    const newNote = {
+      ...note, 
+      tags: [note.tags.toSpliced(note.tags.indexOf(tag), 1)]
+    }
+
+    // Set notesState
+    setNotesState((prev) => ({
+      ...prev, 
+      byId: {...prev.byId, [id]: newNote}
+    }))
   }    
 
   return (
     <Badge variant="outline" className="relative min-w-20 min-h-5 group pr-2 rounded-full hover:pr-6 transition-all">
       <span>{tag}</span>
-      <button onClick={() => determineTagAction(tag, id)} className="absolute right-1 opacity-0 group-hover:opacity-100 text-xs transition-opacity">
+      <button onClick={() => determineTagAction(tag)} className="absolute right-1 opacity-0 group-hover:opacity-100 text-xs transition-opacity">
         {determineIcon()}
       </button>
     </Badge>
