@@ -19,7 +19,7 @@ function TagAddMenu({ id }) {
     <Command className="bg-slate-950">
       <CommandInput placeholder="Search for a tag..." className="text-foreground"/>
       <CommandList>
-        <CommandGroup heading="Tags">
+        <CommandGroup heading="Tags" className="px-2 pb-44">
           {tagNames.map((tag) => (
             <Tag key={tag} tag={tag} mode="add" id={id}/>
           ))}
