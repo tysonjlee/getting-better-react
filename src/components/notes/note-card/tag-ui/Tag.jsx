@@ -45,7 +45,7 @@ function Tag({ tag, mode, id }) {
     // Create new note w/o tag 
     const newNote = {
       ...note, 
-      tags: [note.tags.toSpliced(note.tags.indexOf(tag), 1)]
+      tags: note.tags.toSpliced(note.tags.indexOf(tag), 1)
     }
 
     // Set notesState
