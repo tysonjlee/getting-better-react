@@ -91,15 +91,13 @@ The documentation below is for my personal use :p
 
 ### v0.5 - MVP (V)
 
-- User Accounts
-  - User Profile page
-    - User settings page
-  - Store info (notes, user data, etc.) on backend
+- (Organization Refactor) - remove Deleted Notes page & centralize into Notes Manager page
+- User Accounts - profile page, login, auth, etc.
+- Note Modal - click on a note to open a detailed view of it
+- Note Tags - tag a note with conditions/feelings such as "Depression", "Anxiety", etc.
 - Pinned Notes - pin a note to your dashboard
 - Search Query - search for relative notes by keywords or note content (AI implementation)
-- Note Modal - click on a note to open a detailed view of it
-- Organization refactor - remove Deleted Notes page & centralize into Notes Manager page
-- Notes Manager sorting/filtering
+- Notes Manager Sorting & Filtering
   - Filtering:
     - By status
       - Show all notes
@@ -110,4 +108,4 @@ The documentation below is for my personal use :p
     - By tags (see noteTags in global.js)
   - Sorting:
     - By time
-- Overall visual & UI/UX refactor
+- Overall visual & UI/UX refactor (switch to React)
