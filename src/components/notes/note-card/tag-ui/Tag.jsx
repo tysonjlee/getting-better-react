@@ -56,7 +56,7 @@ function Tag({ tag, mode, id }) {
   }    
 
   return (
-    <Badge variant="outline" className="relative min-w-20 min-h-5 group pr-2 rounded-full hover:pr-6 transition-all">
+    <Badge variant="outline" className="relative min-w-15 min-h-5 group rounded-full hover:pr-6 transition-all">
       <span>{tag}</span>
       <button onClick={() => determineTagAction(tag)} className="absolute right-1 opacity-0 group-hover:opacity-100 text-xs transition-opacity">
         {determineIcon()}
