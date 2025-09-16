@@ -27,7 +27,7 @@ function NoteCardDialogTags({ id }) {
             <LuCircleFadingPlus size={18} />
           </button>
         </PopoverTrigger>
-        <PopoverContent className="flex max-h-44 resize-none overflow-y-auto mt-3 bg-slate-950">
+        <PopoverContent className="max-h-60 max-w-96 h-full w-full mt-3 overflow-hidden bg-slate-950">
           <TagAddMenu id={id}/>
         </PopoverContent>
       </Popover>
