@@ -34,7 +34,7 @@ node_modules/
 personal_docs
 
 # Local files (env)
-.env
+.env.local
 
 # Tailwind CLI Output file (show publicly for now; remove comment later if wanting to hide)
 # output.css
