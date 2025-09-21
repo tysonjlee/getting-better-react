@@ -4,6 +4,17 @@ const openai = new OpenAI({
 })
 
 Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  })
+}
+
   // Get the input 
   const { input } = await req.json()
 
@@ -15,10 +26,15 @@ Deno.serve(async (req) => {
   })
 
   // Extract the actual embedding vector 
-  const embeddingVector = embeddingResponse.data[0].embedding
+  const embedding = embeddingResponse.data[0].embedding
 
   // Return the embedding vector back to the client (as the response)
-  return new Response(JSON.stringify({ embedding: embeddingVector }), {
-    headers: { 'Content-Type': 'application/json' },
+  return new Response(JSON.stringify({ embedding }), {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
   });  
 })
