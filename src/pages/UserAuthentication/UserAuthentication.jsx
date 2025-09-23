@@ -3,7 +3,7 @@ import LoginForm from "@/components/auth/LoginForm"
 import SignupForm from "@/components/auth/SignupForm"
 import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm"
 
-function Login() {
+function UserAuthentication() {
   const [showLogin, setShowLogin] = useState(true)
   const [showSignup, setShowSignup] = useState(false)
   const [showForgotPassword, setShowForgotPassword] = useState(false)
@@ -30,4 +30,4 @@ function Login() {
   )
 }
 
-export default Login
+export default UserAuthentication
