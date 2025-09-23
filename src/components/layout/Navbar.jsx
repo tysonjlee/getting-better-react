@@ -5,6 +5,7 @@ import { ChevronDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import CreateNoteDialog from '@/components/notes/CreateNoteDialog'
+import AvatarDropdownMenu from '@/components/layout/AvatarDropdownMenu'
 
 const navigationMenuItems = [
 	{ title: 'Home', to: '/home' },
@@ -25,7 +26,7 @@ function Navbar() {
 			<div className="flex flex-row justify-end">
 				<CreateNoteDialog className={navigationMenuTriggerStyle()} />
 				<NavigationMenu>
-					<NavigationMenuList>
+					<NavigationMenuList className="pr-4">
 						{navigationMenuItems.map((item) => (
 							<NavigationMenuItem key={item.title} className="text-foreground">
 								<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
@@ -34,6 +35,8 @@ function Navbar() {
 							</NavigationMenuItem>
 						))}
 					</NavigationMenuList>
+					{/* Avatar Dropdown Menu*/}
+					<AvatarDropdownMenu />
 				</NavigationMenu>
 			</div>
 		</nav>
