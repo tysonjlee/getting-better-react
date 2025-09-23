@@ -5,10 +5,10 @@ import AppRoutes from './routes'
 
 function App() {
 	return (
-		<NotesProvider>
+		<>
 			<Navbar />
 			<AppRoutes />
-		</NotesProvider>
+		</>
 	)
 }
 
