@@ -1,9 +1,31 @@
+import { useState } from "react"
 import LoginForm from "@/components/auth/LoginForm"
+import SignupForm from "@/components/auth/SignupForm"
+import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm"
 
 function Login() {
+  const [showLogin, setShowLogin] = useState(true)
+  const [showSignup, setShowSignup] = useState(false)
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
+
+  const authProps = {
+    showLogin, 
+    setShowLogin, 
+    showSignup, 
+    setShowSignup, 
+    showForgotPassword, 
+    setShowForgotPassword
+  }
+
+  function handleShowComponent() {
+    if (showLogin) return <LoginForm {...authProps} />
+    else if (showSignup) return <SignupForm />
+    else if (showForgotPassword) return <ForgotPasswordForm />
+  }
+
   return (
-    <div className="flex justify-center items-center pt-80">
-      <LoginForm className="pt-10"/>
+    <div className="flex w-screen h-screen justify-center items-center">
+      {handleShowComponent()}
     </div>
   )
 }
