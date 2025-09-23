@@ -20,7 +20,7 @@ function UserAuthentication() {
   function handleShowComponent() {
     if (showLogin) return <LoginForm {...authProps} />
     else if (showSignup) return <SignupForm {...authProps} />
-    else if (showForgotPassword) return <ForgotPasswordForm />
+    else if (showForgotPassword) return <ForgotPasswordForm {...authProps} />
   }
 
   return (
