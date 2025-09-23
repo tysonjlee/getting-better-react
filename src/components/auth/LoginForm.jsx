@@ -19,7 +19,7 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
 
   const handleLogin = async () => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) setError("Invalid login. Please try again.")
+    if (error) setError(error.message)
   }
 
   function handleSignup() {
@@ -36,11 +36,11 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
     <Card className="w-full max-w-sm bg-slate-800 text-foreground">
       <CardHeader> 
         <div className="flex flex-row justify-between">
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Login</CardTitle>
           <Button variant="outline" onClick={handleSignup} className="max-w-14 max-h-6 bg-stone-800 text-foreground text-xs hover:bg-stone-700 hover:text-stone-400">Sign Up</Button>
         </div>
         <CardDescription className="text-foreground">
-          Enter your email below to login to your account
+          Enter your credentials below to login to your account
         </CardDescription>
       </CardHeader>
       <CardContent>
