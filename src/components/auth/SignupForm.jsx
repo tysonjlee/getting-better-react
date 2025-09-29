@@ -31,8 +31,6 @@ function SignupForm({ setShowLogin, setShowSignup }) {
   }
 
   const renderSignupAlert = () => {
-      console.log("ERROR_MESSAGE: ", errorMessage)
-      console.log("MESSAGE: ", message)
       if (errorMessage) {
         return (
           <Alert variant="destructive">
