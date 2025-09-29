@@ -20,7 +20,7 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
   const [error, setError] = useState(null) // For showing error message if invalid login
 
   const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password })
     if (error) setError(error.message)
   }
 

@@ -20,7 +20,7 @@ function SignupForm({ setShowLogin, setShowSignup }) {
   const [message, setMessage] = useState(null)
   
   const handleSignup = async () => {
-    const { error } = await supabase.auth.signUp({ email, password }) // TODO: Normalize email upon signup (trim, lower-case) 
+    const { error } = await supabase.auth.signUp({ email: email.trim().toLowerCase(), password }) 
     if (error) setErrorMessage(error.message)
     else {
       setEmail("")
