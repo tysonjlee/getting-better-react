@@ -59,7 +59,8 @@ function CreateNoteDialog() {
 					pinned: false,
 				}
 			);
-		console.log(error)
+		if (error) console.error(error)
+		
 
 		// Reset states
 		setTextareaContent('')
