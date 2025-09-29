@@ -40,7 +40,6 @@ function CreateNoteDialog() {
 			return
 		}
 
-		// TODO: Implement tag saving 
 		// Save note to Supabase table 
 		const now = new Date().toISOString()
 		const { error } = await supabase
@@ -57,6 +56,7 @@ function CreateNoteDialog() {
 					is_deleted: false,
 					deleted_at: null,
 					pinned: false,
+					tags: []
 				}
 			);
 		if (error) console.error(error)
