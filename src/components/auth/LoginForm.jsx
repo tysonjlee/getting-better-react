@@ -74,7 +74,7 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
                 <div className="flex items-center">
                   <Label htmlFor="password" className="text-foreground">Password</Label>
                   <a
-                    href="#"
+                    onClick={handleForgotPassword}
                     className="ml-auto text-sm underline-offset-2 hover:underline text-foreground"
                   >
                     Forgot your password?
