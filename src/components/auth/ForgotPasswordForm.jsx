@@ -12,11 +12,11 @@ import { Label } from "@/components/ui/Label"
 import supabase from "@/lib/supabaseClient"
 import { useState } from "react"
 
-function ForgotPasswordForm({ setShowLogin, setShowForgotPassword, }) {
+function ForgotPasswordForm({ setShowLogin, setShowForgotPassword }) {
   const [email, setEmail] = useState("")
   const [error, setError] = useState("")
 
-  const handleResetPassword = async () => {
+  const handleResetLink = async () => {
     const { error } = supabase.auth.resetPasswordForEmail(email)
     if (error) setError(error.message)
   }
@@ -27,46 +27,53 @@ function ForgotPasswordForm({ setShowLogin, setShowForgotPassword, }) {
   }
 
   return (
-      <Card className="w-full max-w-sm bg-slate-800 text-foreground">
-        <CardHeader> 
-          <div className="flex flex-row justify-between">
-            <CardTitle>Reset Password</CardTitle>
-            <Button variant="outline" onClick={handleLogin} className="max-w-24 max-h-6 bg-stone-800 text-foreground text-xs hover:bg-stone-700 hover:text-stone-400">Back to Login</Button>
-          </div>
-          <CardDescription className="text-foreground">
-            Enter your email to reset your password.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
+    <div className="flex flex-col justify-center gap-6 max-w-[40%] max-h-[60%] w-full h-full">
+      <Card className="overflow-hidden p-0 bg-neutral-900 border-stone-800">
+        <CardContent className="grid p-0 md:grid-cols-2">
+          <form className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+              <div className="flex flex-col items-center text-center">
+                <h1 className="text-2xl font-bold text-foreground">Forgot password?</h1>
+                <p className="text-muted-foreground text-balance ">
+                  Enter your email to reset your password
+                </p>
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="email" className="text-foreground">Email</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
-                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="border-neutral-600 bg-neutral-800 focus-visible:ring-transparent focus-visible:border-neutral-400 text-foreground"
                   required
                 />
               </div>
+              <Button type="submit" onClick={handleResetLink} className="w-full bg-foreground text-neutral-900 hover:bg-neutral-400 hover:text-neutral-950">
+                Send reset link
+              </Button>
+              <div className="text-center text-sm text-foreground">
+                Already have an account?{" "}
+                <a onClick={handleLogin} className="underline underline-offset-4 hover:cursor-pointer">
+                  Login
+                </a>
+              </div>
             </div>
           </form>
+          <div className="bg-muted relative hidden md:block">
+            <img
+              src="/public/login-wallpaper.jpg"
+              alt="Image"
+              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale bg-foreground"
+            />
+          </div>
         </CardContent>
-        <CardFooter className="flex-col gap-2">
-          <Button 
-            variant="outline" 
-            type="submit" 
-            onClick={handleResetPassword}
-            className="w-full bg-stone-800 hover:bg-stone-700 hover:text-stone-400"
-          >
-              Reset Password
-          </Button>
-          {error && <p>{error}</p>}
-        </CardFooter>
       </Card>
-    )
+      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+        By signing up, you agree to our <a href="#">Terms of Service</a>{" "}
+        and <a href="#">Privacy Policy</a>.
+      </div>
+    </div>
+  )
 }
 
 export default ForgotPasswordForm
