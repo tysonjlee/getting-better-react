@@ -60,7 +60,6 @@ function CreateNoteDialog() {
 				}
 			);
 		if (error) console.error(error)
-		
 
 		// Reset states
 		setTextareaContent('')
