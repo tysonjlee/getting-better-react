@@ -45,7 +45,7 @@ function CreateNoteDialog() {
 		const now = new Date().toISOString()
 		const { error } = await supabase
 			.from('user_notes')
-			.insert([
+			.insert(
 				{
 					note_id: crypto.randomUUID(),
 					user_id: userId,
@@ -58,7 +58,7 @@ function CreateNoteDialog() {
 					deleted_at: null,
 					pinned: false,
 				}
-			]);
+			);
 		console.log(error)
 
 		// Reset states
