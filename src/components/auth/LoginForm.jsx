@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/Input"
 import { Label } from "@/components/ui/Label"
 import supabase from "@/lib/supabaseClient"
 import { useState } from "react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
 
 function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
   const [email, setEmail] = useState("") // User's email
@@ -33,8 +34,22 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
     setShowForgotPassword(true)
   }
 
+  const renderLoginAlert = () => {
+    if (error) {
+      return (
+      <Alert variant="destructive">
+        <AlertTitle>Warning</AlertTitle>
+        <AlertDescription>
+          {error}
+        </AlertDescription>
+      </Alert>
+    ) 
+    }else return (<></>)
+  }
+
   return (
     <div className="flex flex-col justify-center gap-6 max-w-[40%] max-h-[60%] w-full h-full">
+      {renderLoginAlert()}
       <Card className="overflow-hidden p-0 bg-neutral-900 border-stone-800">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">

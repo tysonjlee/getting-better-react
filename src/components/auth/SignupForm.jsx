@@ -11,23 +11,21 @@ import {
 } from "@/components/ui/Card"
 import { Input } from "@/components/ui/Input"
 import { Label } from "@/components/ui/Label"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
 
 function SignupForm({ setShowLogin, setShowSignup }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [invalidEmail, setInvalidEmail] = useState(false)
-  const [invalidPassword, setInvalidPassword] = useState(false)
-  const [message, setMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [message, setMessage] = useState(null)
   
   const handleSignup = async () => {
-    console.log("email: " + email)
-    console.log("password: " + password)
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) setMessage(error.message)
+    const { error } = await supabase.auth.signUp({ email, password }) // TODO: Normalize email upon signup (trim, lower-case) 
+    if (error) setErrorMessage(error.message)
     else {
       setEmail("")
       setPassword("")
-      setMessage("Please check your email for verification.")
+      setMessage("Please check your email for verification or log in if already verified.")
     }
   }
 
@@ -36,39 +34,35 @@ function SignupForm({ setShowLogin, setShowSignup }) {
     setShowLogin(true)
   }
 
-  const isPasswordValid = () => {
-    /** Password must have at least: 
-     * 8 characters
-     * 1 uppercase letter 
-     * 1 lowercase letter 
-     * 1 number
-     * 1 special symbol (!@#$%^&*()_+-=[]{};'\:"|<>?,./`~)
-     */ 
-    
-    // Check for 8 characters 
-    
-
-
-    // Check for 1 uppercase letter 
-
-
-    // Check for 1 lowercase letter 
-
-
-    // Check for 1 number 
-
-
-    // Check for 1 special symbol 
-
-
-    // Return true if passed all checks 
-    return true
-  }
-
-
+  const renderSignupAlert = () => {
+      console.log("ERROR_MESSAGE: ", errorMessage)
+      console.log("MESSAGE: ", message)
+      if (errorMessage) {
+        return (
+          <Alert variant="destructive">
+            <AlertTitle>Warning</AlertTitle>
+            <AlertDescription>
+              {errorMessage}
+            </AlertDescription>
+          </Alert>
+        )
+      } else if (message) {
+          return (
+            <Alert variant="success">
+              <AlertTitle>Success</AlertTitle>
+              <AlertDescription>
+                {message}
+              </AlertDescription>
+            </Alert>
+          )
+        } else {
+            return (<></>)
+          }
+    }
 
   return (
     <div className="flex flex-col justify-center gap-6 max-w-[40%] max-h-[60%] w-full h-full">
+      {renderSignupAlert()}
       <Card className="overflow-hidden p-0 bg-neutral-900 border-stone-800">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">
@@ -120,7 +114,6 @@ function SignupForm({ setShowLogin, setShowSignup }) {
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale bg-foreground"
             />
           </div>
-          {message && <p>{message}</p>}
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
