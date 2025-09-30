@@ -55,7 +55,7 @@ function SignupForm({ setShowLogin, setShowSignup }) {
     }
 
   return (
-    <div className="flex flex-col justify-center gap-6 max-w-[40%] max-h-[60%] w-full h-full">
+    <div className="flex flex-col justify-center gap-6 max-w-[50%] max-h-[60%] w-full h-full">
       {renderSignupAlert()}
       <Card className="overflow-hidden p-0 bg-neutral-900 border-stone-800">
         <CardContent className="grid p-0 md:grid-cols-2">
