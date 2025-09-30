@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react'
+import supabase from '@/lib/supabaseClient';
 
 export const initialNotesState = {
 	byId: {}, // Single truth source
@@ -79,12 +80,30 @@ export const tagNames = [
 export const NotesContext = createContext(null)
 
 export function NotesProvider({ children }) {
-	// Get notesState from localStorage or initialize if no localStorage
+	// Initialize notesState as empty
 	const [notesState, setNotesState] = useState(() => {
-		const storedNotesState = localStorage.getItem('notesState')
-		if (storedNotesState) return JSON.parse(storedNotesState)
-		else return initialNotesState
+		return initialNotesState
 	})
+
+	// Populate notesState from Supabase backend IF user has any notes
+	useEffect(() => {
+		const populateNotesState = (data) => {
+				console.log("Notes to display:", data)
+		}
+
+		const fetchNotes = async () => {
+			// If the user isn't logged in, don't do anything 
+			const { data: { user } } = await supabase.auth.getUser()
+			if (user === null) return
+
+			// Otherwise, populate notesState with the user's backend notes
+			const { data, error } = await supabase.from('user_notes').select().eq('user_id', user.id)
+			if (error) console.error(error.message)
+			else populateNotesState(data)
+		}
+
+		fetchNotes()
+	}, [])
 
 	// Update localStorage whenever notesState changes
 	useEffect(() => {
