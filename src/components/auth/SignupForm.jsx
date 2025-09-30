@@ -30,7 +30,7 @@ function SignupForm({ setShowLogin, setShowSignup }) {
     setShowLogin(true)
   }
 
-  const renderSignupAlert = () => {
+  const renderAlert = () => {
       if (errorMessage) {
         return (
           <Alert variant="destructive">
@@ -52,11 +52,11 @@ function SignupForm({ setShowLogin, setShowSignup }) {
         } else {
             return (<></>)
           }
-    }
+  }
 
   return (
     <div className="flex flex-col justify-center gap-6 max-w-[50%] max-h-[60%] w-full h-full">
-      {renderSignupAlert()}
+      {renderAlert()}
       <Card className="overflow-hidden p-0 bg-neutral-900 border-stone-800">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">
