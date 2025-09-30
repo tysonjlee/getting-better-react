@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/Card"
 import { Input } from "@/components/ui/Input"
 import { Label } from "@/components/ui/Label"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert"
 import supabase from "@/lib/supabaseClient"
 import { useState } from "react"
 
@@ -26,8 +27,24 @@ function ForgotPasswordForm({ setShowLogin, setShowForgotPassword }) {
     setShowLogin(true)
   }
 
+
+  const renderAlert = () => {
+      if (error) {
+        return (
+        <Alert variant="destructive">
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription>
+            {error}
+          </AlertDescription>
+        </Alert>
+      ) 
+      } else return (<></>)
+    }
+
+
   return (
     <div className="flex flex-col justify-center gap-6 max-w-[50%] max-h-[60%] w-full h-full">
+      {renderAlert()}
       <Card className="overflow-hidden p-0 bg-neutral-900 border-stone-800">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">
