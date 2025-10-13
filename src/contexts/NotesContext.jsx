@@ -88,7 +88,54 @@ export function NotesProvider({ children }) {
 	// Populate notesState from Supabase backend IF user has any notes
 	useEffect(() => {
 		const populateNotesState = (data) => {
-				console.log("Notes to display:", data)
+			const byId = {}
+			const byOrderActive = []
+			const byOrderPinned = []
+			const byOrderDeleted = []
+
+			// Populate notesState for each note
+			for (const note of data) {
+				console.log(note) // FIXME: Delete testing
+				// Make new note structure 
+				const createdAt = new Date(note.created_at).getTime()
+				const updatedAt = note.updated_at ? new Date(note.updated_at).getTime() : null
+				const deletedAt = note.deleted_at ? new Date(note.deleted_at).getTime() : null
+				const lastChangeAt = Math.max(createdAt, updatedAt || 0)
+
+				const newNote = {
+					id: note.id,
+					content: note.content,
+					createdAt,
+					updatedAt,
+					lastChangeAt,
+					isDeleted: note.is_deleted,
+					deletedAt,
+					pinned: note.pinned,
+					tags: note.tags || [],
+					wasUpdated: !!updatedAt
+				}
+
+				// Save into notesState
+				byId[note.id] = newNote
+				if (newNote.isDeleted) byOrderDeleted.push(note.id)
+				else if (newNote.pinned) {
+					byOrderPinned.push(note.id)
+					byOrderActive.push(note.id)
+				}
+				else byOrderActive.push(note.id)
+			}
+
+			const sortDesc = (a, b) => byId[b].lastChangeAt - byId[a].lastChangeAt
+			byOrderActive.sort(sortDesc)
+			byOrderPinned.sort(sortDesc)
+			byOrderDeleted.sort((a, b) => byId[b].deletedAt - byId[a].deletedAt)
+
+			setNotesState({
+				byId,
+				byOrderActive,
+				byOrderPinned,
+				byOrderDeleted
+			})
 		}
 
 		const fetchNotes = async () => {
@@ -104,11 +151,6 @@ export function NotesProvider({ children }) {
 
 		fetchNotes()
 	}, [])
-
-	// Update localStorage whenever notesState changes
-	useEffect(() => {
-		localStorage.setItem('notesState', JSON.stringify(notesState))
-	}, [notesState])
 
 	// Define delete, pin, & recover functions
 	function deleteNote(id) {
