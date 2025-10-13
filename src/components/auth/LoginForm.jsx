@@ -83,7 +83,7 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
                   required 
                 />
               </div>
-              <Button type="submit" className="w-full bg-foreground text-neutral-900 hover:bg-neutral-400 hover:text-neutral-950" onClick={handleLogin}>
+              <Button type="button" className="w-full bg-foreground text-neutral-900 hover:bg-neutral-400 hover:text-neutral-950" onClick={handleLogin}>
                 Login
               </Button>
               <div className="text-center text-sm text-foreground">

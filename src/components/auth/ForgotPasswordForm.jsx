@@ -48,7 +48,7 @@ function ForgotPasswordForm({ setShowLogin, setShowForgotPassword }) {
                   required
                 />
               </div>
-              <Button type="submit" onClick={handleResetLink} className="w-full bg-foreground text-neutral-900 hover:bg-neutral-400 hover:text-neutral-950">
+              <Button type="button" onClick={handleResetLink} className="w-full bg-foreground text-neutral-900 hover:bg-neutral-400 hover:text-neutral-950">
                 Send reset link
               </Button>
               <div className="text-center text-sm text-foreground">
