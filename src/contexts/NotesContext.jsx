@@ -103,6 +103,7 @@ export function NotesProvider({ children }) {
 	}
 
 	function populateNotesState(data) {
+		// Create placeholder arrays
 		const byId = {}
 		const byOrderActive = []
 		const byOrderPinned = []
@@ -129,7 +130,7 @@ export function NotesProvider({ children }) {
 				wasUpdated: !!updatedAt
 			}
 
-			// Save into notesState
+			// Save into placeholder arrays
 			byId[note.note_id] = newNote
 			if (newNote.isDeleted) byOrderDeleted.push(note.note_id)
 			else if (newNote.pinned) {
@@ -139,11 +140,13 @@ export function NotesProvider({ children }) {
 			else byOrderActive.push(note.note_id)
 		}
 
+		// Sort byOrderActive, byOrderPinned, & byOrderDeleted
 		const sortDesc = (a, b) => byId[b].lastChangeAt - byId[a].lastChangeAt
 		byOrderActive.sort(sortDesc)
 		byOrderPinned.sort(sortDesc)
 		byOrderDeleted.sort((a, b) => byId[b].deletedAt - byId[a].deletedAt)
 
+		// Set notesState w/ placeholder arrays
 		setNotesState({
 			byId,
 			byOrderActive,
