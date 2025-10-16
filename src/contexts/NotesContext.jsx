@@ -114,8 +114,6 @@ export function NotesProvider({ children }) {
 					wasUpdated: !!updatedAt
 				}
 
-				console.log(newNote)
-
 				// Save into notesState
 				byId[note.note_id] = newNote
 				if (newNote.isDeleted) byOrderDeleted.push(note.note_id)
