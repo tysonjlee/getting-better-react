@@ -229,44 +229,6 @@ export function NotesProvider({ children }) {
 		await fetchNotes()
 	}
 
-	function findInsertIndex(id) {
-		/**
-		 * @brief Finds the proper placement of id in byOrderActive
-		 * @note helper for recoverNote()
-		 * @note Same problem as Leetcode's Search Insert Position (https://leetcode.com/problems/search-insert-position/description/)
-		 * @note Used GeeksForGeeks solution (https://www.geeksforgeeks.org/dsa/search-insert-position-of-k-in-a-sorted-array/)
-		 * @param id The unique id of the note to recover
-		 * @return the correct index to insert into
-		 */
-
-		// Edge case: If byOrderActive is empty, return 0
-		if (notesState.byOrderActive.length === 0) return 0
-
-		// Get note to recover's timestamp
-		const noteToRecover = notesState.byId[id]
-		const noteToRecoverTimestamp = noteToRecover.lastChangeAt
-
-		// Use binary search to find index
-		/** @note Remember that byOrderActive is by timestamp DESCENDING! */
-		let lo = 0
-		let hi = notesState.byOrderActive.length - 1
-		while (lo < hi) {
-			// Get middle object's timestamp
-			let mid = Math.floor(lo + (hi - lo) / 2)
-			let midNote = notesState.byId[notesState.byOrderActive[mid]]
-			let midTimestamp = midNote.lastChangeAt
-
-			// If mid is less than our timestamp, adjust window left
-			if (midTimestamp <= noteToRecoverTimestamp) hi = mid
-			// Otherwise, adjust window right
-			else lo = mid + 1
-		}
-
-		// arr[lo] is the first element <= ourTimestamp
-		if (notesState.byId[notesState.byOrderActive[lo]].lastChangeAt > noteToRecoverTimestamp) return lo + 1
-		else return lo
-	}
-
 	// Return NotesContext provider
 	return (
 		<NotesContext.Provider
