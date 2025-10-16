@@ -152,29 +152,23 @@ export function NotesProvider({ children }) {
 		})
 	}
 
-	function deleteNote(id) {
+	async function deleteNote(id) {
 		// If the note is already deleted, exit
 		if (notesState.byId[id].isDeleted) return
 
-		// Get note
-		const note = notesState.byId[id]
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				is_deleted: true, 
+				deleted_at: new Date().toISOString(), 
+				pinned: false
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Save new note information
-		const newNote = {
-			...note,
-			isDeleted: true,
-			deletedAt: Date.now(),
-			pinned: false
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderActive: prev.byOrderActive.filter((noteId) => noteId !== id),
-			byOrderPinned: prev.byOrderPinned.filter((noteId) => noteId !== id),
-			byOrderDeleted: [id, ...prev.byOrderDeleted.filter((noteId) => noteId !== id)]
-		}))
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
 	function togglePin(id) {
