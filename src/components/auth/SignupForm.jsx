@@ -90,7 +90,7 @@ function SignupForm({ setShowLogin, setShowSignup }) {
                   required 
                 />
               </div>
-              <Button type="submit" className="w-full bg-foreground text-neutral-900 hover:bg-neutral-400 hover:text-neutral-950" onClick={handleSignup}>
+              <Button type="button" className="w-full bg-foreground text-neutral-900 hover:bg-neutral-400 hover:text-neutral-950" onClick={handleSignup}>
                 Signup
               </Button>
               <div className="text-center text-sm text-foreground">
