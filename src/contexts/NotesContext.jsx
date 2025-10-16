@@ -181,46 +181,34 @@ export function NotesProvider({ children }) {
 		else unpinNote(id)
 	}
 
-	function pinNote(id) {
+	async function pinNote(id) {
 		// If the note is deleted or already pinned, exit
 		if (notesState.byId[id].isDeleted || notesState.byId[id].pinned) return
 
-		// Get note
-		const note = notesState.byId[id]
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ pinned: true })
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Save new note information
-		const newNote = {
-			...note,
-			pinned: true
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderPinned: [id, ...prev.byOrderPinned.filter((noteId) => noteId !== id)]
-		}))
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
-	function unpinNote(id) {
+	async function unpinNote(id) {
 		// If the note is deleted or already unpinned, exit
 		if (notesState.byId[id].isDeleted || !notesState.byId[id].pinned) return
 
-		// Get note
-		const note = notesState.byId[id]
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ pinned: false })
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Save new note information
-		const newNote = {
-			...note,
-			pinned: false
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderPinned: prev.byOrderPinned.filter((noteId) => noteId !== id)
-		}))
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
 	async function recoverNote(id) {
