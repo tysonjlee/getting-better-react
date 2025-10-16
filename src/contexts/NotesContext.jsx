@@ -87,71 +87,71 @@ export function NotesProvider({ children }) {
 
 	// Populate notesState from Supabase backend IF user has any notes
 	useEffect(() => {
-		const populateNotesState = (data) => {
-			const byId = {}
-			const byOrderActive = []
-			const byOrderPinned = []
-			const byOrderDeleted = []
-			
-			// Populate notesState for each note
-			for (const note of data) {
-				// Make new note structure 
-				const createdAt = new Date(note.created_at).getTime()
-				const updatedAt = note.updated_at ? new Date(note.updated_at).getTime() : null
-				const deletedAt = note.deleted_at ? new Date(note.deleted_at).getTime() : null
-				const lastChangeAt = Math.max(createdAt, updatedAt || 0)
+		fetchNotes()
+	})
 
-				const newNote = {
-					id: note.note_id,
-					content: note.content,
-					createdAt,
-					updatedAt,
-					lastChangeAt,
-					isDeleted: note.is_deleted,
-					deletedAt,
-					pinned: note.pinned,
-					tags: note.tags || [],
-					wasUpdated: !!updatedAt
-				}
+	// Define note functions 
+	async function fetchNotes() {
+		// If the user isn't logged in, don't do anything 
+		const { data: { user } } = await supabase.auth.getUser()
+		if (user === null) return
 
-				// Save into notesState
-				byId[note.note_id] = newNote
-				if (newNote.isDeleted) byOrderDeleted.push(note.note_id)
-				else if (newNote.pinned) {
-					byOrderPinned.push(note.note_id)
-					byOrderActive.push(note.note_id)
-				}
-				else byOrderActive.push(note.note_id)
+		// Otherwise, populate notesState with the user's backend notes
+		const { data, error } = await supabase.from('user_notes').select().eq('user_id', user.id)
+		if (error) console.error(error.message)
+		else populateNotesState(data)
+	}
+
+	function populateNotesState(data) {
+		const byId = {}
+		const byOrderActive = []
+		const byOrderPinned = []
+		const byOrderDeleted = []
+		
+		// Populate notesState for each note
+		for (const note of data) {
+			// Make new note structure 
+			const createdAt = new Date(note.created_at).getTime()
+			const updatedAt = note.updated_at ? new Date(note.updated_at).getTime() : null
+			const deletedAt = note.deleted_at ? new Date(note.deleted_at).getTime() : null
+			const lastChangeAt = Math.max(createdAt, updatedAt || 0)
+
+			const newNote = {
+				id: note.note_id,
+				content: note.content,
+				createdAt,
+				updatedAt,
+				lastChangeAt,
+				isDeleted: note.is_deleted,
+				deletedAt,
+				pinned: note.pinned,
+				tags: note.tags || [],
+				wasUpdated: !!updatedAt
 			}
 
-			const sortDesc = (a, b) => byId[b].lastChangeAt - byId[a].lastChangeAt
-			byOrderActive.sort(sortDesc)
-			byOrderPinned.sort(sortDesc)
-			byOrderDeleted.sort((a, b) => byId[b].deletedAt - byId[a].deletedAt)
-
-			setNotesState({
-				byId,
-				byOrderActive,
-				byOrderPinned,
-				byOrderDeleted
-			})
+			// Save into notesState
+			byId[note.note_id] = newNote
+			if (newNote.isDeleted) byOrderDeleted.push(note.note_id)
+			else if (newNote.pinned) {
+				byOrderPinned.push(note.note_id)
+				byOrderActive.push(note.note_id)
+			}
+			else byOrderActive.push(note.note_id)
 		}
 
-		const fetchNotes = async () => {
-			// If the user isn't logged in, don't do anything 
-			const { data: { user } } = await supabase.auth.getUser()
-			if (user === null) return
+		const sortDesc = (a, b) => byId[b].lastChangeAt - byId[a].lastChangeAt
+		byOrderActive.sort(sortDesc)
+		byOrderPinned.sort(sortDesc)
+		byOrderDeleted.sort((a, b) => byId[b].deletedAt - byId[a].deletedAt)
 
-			// Otherwise, populate notesState with the user's backend notes
-			const { data, error } = await supabase.from('user_notes').select().eq('user_id', user.id)
-			if (error) console.error(error.message)
-			else populateNotesState(data)
-		}
+		setNotesState({
+			byId,
+			byOrderActive,
+			byOrderPinned,
+			byOrderDeleted
+		})
+	}
 
-		fetchNotes()
-	}, [])
-
-	// Define delete, pin, & recover functions
 	function deleteNote(id) {
 		// If the note is already deleted, exit
 		if (notesState.byId[id].isDeleted) return
