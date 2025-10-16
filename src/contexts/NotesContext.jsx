@@ -92,10 +92,9 @@ export function NotesProvider({ children }) {
 			const byOrderActive = []
 			const byOrderPinned = []
 			const byOrderDeleted = []
-
+			
 			// Populate notesState for each note
 			for (const note of data) {
-				console.log(note) // FIXME: Delete testing
 				// Make new note structure 
 				const createdAt = new Date(note.created_at).getTime()
 				const updatedAt = note.updated_at ? new Date(note.updated_at).getTime() : null
@@ -103,7 +102,7 @@ export function NotesProvider({ children }) {
 				const lastChangeAt = Math.max(createdAt, updatedAt || 0)
 
 				const newNote = {
-					id: note.id,
+					id: note.note_id,
 					content: note.content,
 					createdAt,
 					updatedAt,
@@ -115,14 +114,16 @@ export function NotesProvider({ children }) {
 					wasUpdated: !!updatedAt
 				}
 
+				console.log(newNote)
+
 				// Save into notesState
-				byId[note.id] = newNote
-				if (newNote.isDeleted) byOrderDeleted.push(note.id)
+				byId[note.note_id] = newNote
+				if (newNote.isDeleted) byOrderDeleted.push(note.note_id)
 				else if (newNote.pinned) {
-					byOrderPinned.push(note.id)
-					byOrderActive.push(note.id)
+					byOrderPinned.push(note.note_id)
+					byOrderActive.push(note.note_id)
 				}
-				else byOrderActive.push(note.id)
+				else byOrderActive.push(note.note_id)
 			}
 
 			const sortDesc = (a, b) => byId[b].lastChangeAt - byId[a].lastChangeAt
