@@ -220,28 +220,22 @@ export function NotesProvider({ children }) {
 		}))
 	}
 
-	function recoverNote(id) {
+	async function recoverNote(id) {
 		// If the note isn't deleted, exit
 		if (!notesState.byId[id].isDeleted) return
 
-		// Get note
-		const note = notesState.byId[id]
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				is_deleted: false, 
+				deleted_at: null
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Save new note information
-		const newNote = {
-			...note,
-			isDeleted: false,
-			deletedAt: null
-		}
-
-		// Set notesState
-		const insertIndex = findInsertIndex(id) // id's proper index into byOrderActive
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderActive: [...prev.byOrderActive.slice(0, insertIndex), id, ...prev.byOrderActive.slice(insertIndex)],
-			byOrderDeleted: prev.byOrderDeleted.filter((noteId) => noteId !== id)
-		}))
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
 	function findInsertIndex(id) {
