@@ -10,14 +10,17 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Textarea } from '@/components/ui/Textarea'
 import { Button } from '@/components/ui/Button'
 import { IoMdCreate } from 'react-icons/io'
-import { useNotes } from '@/contexts/NotesContext'
 import { useState } from 'react'
+import { useSession } from '@supabase/auth-helpers-react'
+import supabase from '@/lib/supabaseClient'
 
 function CreateNoteDialog() {
-	const { setNotesState } = useNotes() // Get setNotesState from useContext(NotesContext)
 	const [textareaContent, setTextareaContent] = useState('') // Textarea's content
 	const [dialogOpen, setDialogOpen] = useState(false) // For tracking if the dialog is opened or closed
 	const [showEmptyAlert, setShowEmptyAlert] = useState(false) // For tracking if the no message alert should show or not
+
+	const session = useSession()
+	const userId = session.user.id
 
 	function renderEmptyAlert() {
 		if (!showEmptyAlert) return null
@@ -30,35 +33,33 @@ function CreateNoteDialog() {
 			)
 	}
 
-	function handleSaveNote() {
+	const handleSaveNote = async () => {
 		// Show empty alert if textarea is empty
 		if (!textareaContent.trim()) {
 			setShowEmptyAlert(true)
 			return
 		}
 
-		// Create new note information
-		const newId = crypto.randomUUID()
-		const now = Date.now()
-		const newNote = {
-			id: newId,
-			content: textareaContent,
-			createdAt: now,
-			wasUpdated: false,
-			updatedAt: null,
-			lastChangeAt: now,
-			isDeleted: false,
-			deletedAt: null,
-			pinned: false,
-			tags: []
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [newId]: newNote },
-			byOrderActive: [newId, ...prev.byOrderActive]
-		}))
+		// Save note to Supabase table 
+		const now = new Date().toISOString()
+		const { error } = await supabase
+			.from('user_notes')
+			.insert(
+				{
+					note_id: crypto.randomUUID(),
+					user_id: userId,
+					content: textareaContent,
+					created_at: now,
+					was_updated: false,
+					updated_at: null,
+					last_change_at: now,
+					is_deleted: false,
+					deleted_at: null,
+					pinned: false,
+					tags: []
+				}
+			);
+		if (error) console.error(error)
 
 		// Reset states
 		setTextareaContent('')

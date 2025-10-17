@@ -4,7 +4,7 @@ import { FiPlus } from "react-icons/fi";
 import { useNotes } from "@/contexts/NotesContext";
 
 function Tag({ tag, mode, id }) {
-  const { notesState, setNotesState } = useNotes()
+  const { notesState, addTag, deleteTag } = useNotes()
   const note = notesState.byId[id]
 
   function determineIcon() {
@@ -26,33 +26,15 @@ function Tag({ tag, mode, id }) {
       return 
     }
 
-    // Create new note w/ new tag
-    const newNote = {
-      ...note, 
-      tags: [...note.tags, tag]
-    }
-
-    // Set notesState 
-    setNotesState((prev) => ({
-      ...prev, 
-      byId: {...prev.byId, [id]: newNote}
-    }))
+    // Call addTag() from NotesContext.jsx 
+    addTag(id, tag)
   }
 
   function handleTagDelete(tag) {
     /** @note For the note dialog tags */
 
-    // Create new note w/o tag 
-    const newNote = {
-      ...note, 
-      tags: note.tags.toSpliced(note.tags.indexOf(tag), 1)
-    }
-
-    // Set notesState
-    setNotesState((prev) => ({
-      ...prev, 
-      byId: {...prev.byId, [id]: newNote}
-    }))
+    // Call deleteTag() from NotesContext.jsx 
+    deleteTag(id, tag)
   }    
 
   return (

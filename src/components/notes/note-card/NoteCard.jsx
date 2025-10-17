@@ -20,7 +20,7 @@ import { useNotes } from '@/contexts/NotesContext'
 import { useState } from 'react'
 
 function NoteCard({ id }) {
-	const { notesState, setNotesState } = useNotes()
+	const { notesState, saveEdit } = useNotes()
 	const note = notesState.byId[id]
 	const [textareaContent, setTextareaContent] = useState(note.content)
 	const [dialogOpen, setDialogOpen] = useState(false)
@@ -61,25 +61,11 @@ function NoteCard({ id }) {
 			return
 		}
 
-		// Save new note information
-		const now = Date.now()
-		const newNote = {
-			...note,
-			content: textareaContent,
-			wasUpdated: true,
-			updatedAt: now,
-			lastChangeAt: now
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderActive: [id, ...prev.byOrderActive.filter((noteId) => noteId !== id)]
-		}))
+		// Call saveEdit() from NotesContext.jsx
+		saveEdit(id, textareaContent)
 
 		// Reset states
-		setTextareaContent(newNote.content)
+		setTextareaContent(textareaContent)
 		setDialogOpen(false)
 		setShowSimilarityAlert(false)
 	}

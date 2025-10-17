@@ -29,7 +29,7 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
     setShowForgotPassword(true)
   }
 
-  const renderLoginAlert = () => {
+  const renderAlert = () => {
     if (error) {
       return (
       <Alert variant="destructive">
@@ -39,12 +39,12 @@ function LoginForm({setShowLogin, setShowSignup, setShowForgotPassword}) {
         </AlertDescription>
       </Alert>
     ) 
-    }else return (<></>)
+    } else return (<></>)
   }
 
   return (
     <div className="flex flex-col justify-center gap-6 max-w-[55%] max-h-[60%] w-full h-full">
-      {renderLoginAlert()}
+      {renderAlert()}
       <Card className="overflow-hidden p-0 bg-neutral-900 border-stone-800">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">

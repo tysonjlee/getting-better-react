@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react'
+import supabase from '@/lib/supabaseClient';
 
 export const initialNotesState = {
 	byId: {}, // Single truth source
@@ -79,42 +80,98 @@ export const tagNames = [
 export const NotesContext = createContext(null)
 
 export function NotesProvider({ children }) {
-	// Get notesState from localStorage or initialize if no localStorage
+	// Initialize notesState as empty
 	const [notesState, setNotesState] = useState(() => {
-		const storedNotesState = localStorage.getItem('notesState')
-		if (storedNotesState) return JSON.parse(storedNotesState)
-		else return initialNotesState
+		return initialNotesState
 	})
 
-	// Update localStorage whenever notesState changes
+	// Populate notesState from Supabase backend IF user has any notes
 	useEffect(() => {
-		localStorage.setItem('notesState', JSON.stringify(notesState))
-	}, [notesState])
+		fetchNotes()
+	})
 
-	// Define delete, pin, & recover functions
-	function deleteNote(id) {
+	// Define note functions 
+	async function fetchNotes() {
+		// If the user isn't logged in, don't do anything 
+		const { data: { user } } = await supabase.auth.getUser()
+		if (user === null) return
+
+		// Otherwise, populate notesState with the user's backend notes
+		const { data, error } = await supabase.from('user_notes').select().eq('user_id', user.id)
+		if (error) console.error(error.message)
+		else populateNotesState(data)
+	}
+
+	function populateNotesState(data) {
+		// Create placeholder arrays
+		const byId = {}
+		const byOrderActive = []
+		const byOrderPinned = []
+		const byOrderDeleted = []
+		
+		// Populate notesState for each note
+		for (const note of data) {
+			// Make new note structure 
+			const createdAt = new Date(note.created_at).getTime()
+			const updatedAt = note.updated_at ? new Date(note.updated_at).getTime() : null
+			const deletedAt = note.deleted_at ? new Date(note.deleted_at).getTime() : null
+			const lastChangeAt = Math.max(createdAt, updatedAt || 0)
+
+			const newNote = {
+				id: note.note_id,
+				content: note.content,
+				createdAt,
+				updatedAt,
+				lastChangeAt,
+				isDeleted: note.is_deleted,
+				deletedAt,
+				pinned: note.pinned,
+				tags: note.tags || [],
+				wasUpdated: !!updatedAt
+			}
+
+			// Save into placeholder arrays
+			byId[note.note_id] = newNote
+			if (newNote.isDeleted) byOrderDeleted.push(note.note_id)
+			else if (newNote.pinned) {
+				byOrderPinned.push(note.note_id)
+				byOrderActive.push(note.note_id)
+			}
+			else byOrderActive.push(note.note_id)
+		}
+
+		// Sort byOrderActive, byOrderPinned, & byOrderDeleted
+		const sortDesc = (a, b) => byId[b].lastChangeAt - byId[a].lastChangeAt
+		byOrderActive.sort(sortDesc)
+		byOrderPinned.sort(sortDesc)
+		byOrderDeleted.sort((a, b) => byId[b].deletedAt - byId[a].deletedAt)
+
+		// Set notesState w/ placeholder arrays
+		setNotesState({
+			byId,
+			byOrderActive,
+			byOrderPinned,
+			byOrderDeleted
+		})
+	}
+
+	async function deleteNote(id) {
 		// If the note is already deleted, exit
 		if (notesState.byId[id].isDeleted) return
 
-		// Get note
-		const note = notesState.byId[id]
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				is_deleted: true, 
+				deleted_at: new Date().toISOString(), 
+				pinned: false
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Save new note information
-		const newNote = {
-			...note,
-			isDeleted: true,
-			deletedAt: Date.now(),
-			pinned: false
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderActive: prev.byOrderActive.filter((noteId) => noteId !== id),
-			byOrderPinned: prev.byOrderPinned.filter((noteId) => noteId !== id),
-			byOrderDeleted: [id, ...prev.byOrderDeleted.filter((noteId) => noteId !== id)]
-		}))
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
 	function togglePin(id) {
@@ -124,114 +181,115 @@ export function NotesProvider({ children }) {
 		else unpinNote(id)
 	}
 
-	function pinNote(id) {
+	async function pinNote(id) {
 		// If the note is deleted or already pinned, exit
 		if (notesState.byId[id].isDeleted || notesState.byId[id].pinned) return
 
-		// Get note
-		const note = notesState.byId[id]
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ pinned: true })
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Save new note information
-		const newNote = {
-			...note,
-			pinned: true
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderPinned: [id, ...prev.byOrderPinned.filter((noteId) => noteId !== id)]
-		}))
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
-	function unpinNote(id) {
+	async function unpinNote(id) {
 		// If the note is deleted or already unpinned, exit
 		if (notesState.byId[id].isDeleted || !notesState.byId[id].pinned) return
 
-		// Get note
-		const note = notesState.byId[id]
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ pinned: false })
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Save new note information
-		const newNote = {
-			...note,
-			pinned: false
-		}
-
-		// Set notesState
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderPinned: prev.byOrderPinned.filter((noteId) => noteId !== id)
-		}))
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
-	function recoverNote(id) {
+	async function recoverNote(id) {
 		// If the note isn't deleted, exit
 		if (!notesState.byId[id].isDeleted) return
 
-		// Get note
+		// Update Supabase backend 
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				is_deleted: false, 
+				deleted_at: null
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
+
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
+	}
+
+	async function addTag(id, tag) {
 		const note = notesState.byId[id]
 
-		// Save new note information
-		const newNote = {
-			...note,
-			isDeleted: false,
-			deletedAt: null
-		}
+		// If the tag is already added, exit 
+		if (note.tags.includes(tag)) return
 
-		// Set notesState
-		const insertIndex = findInsertIndex(id) // id's proper index into byOrderActive
-		setNotesState((prev) => ({
-			...prev,
-			byId: { ...prev.byId, [id]: newNote },
-			byOrderActive: [...prev.byOrderActive.slice(0, insertIndex), id, ...prev.byOrderActive.slice(insertIndex)],
-			byOrderDeleted: prev.byOrderDeleted.filter((noteId) => noteId !== id)
-		}))
+		// Update Supabase backend 
+		const newTags = [...note.tags, tag]
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				tags: newTags
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
+
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
-	function findInsertIndex(id) {
-		/**
-		 * @brief Finds the proper placement of id in byOrderActive
-		 * @note helper for recoverNote()
-		 * @note Same problem as Leetcode's Search Insert Position (https://leetcode.com/problems/search-insert-position/description/)
-		 * @note Used GeeksForGeeks solution (https://www.geeksforgeeks.org/dsa/search-insert-position-of-k-in-a-sorted-array/)
-		 * @param id The unique id of the note to recover
-		 * @return the correct index to insert into
-		 */
+	async function deleteTag(id, tag) {
+		const note = notesState.byId[id]
 
-		// Edge case: If byOrderActive is empty, return 0
-		if (notesState.byOrderActive.length === 0) return 0
+		// If the tag already isn't added, exit 
+		if (!note.tags.includes(tag)) return
 
-		// Get note to recover's timestamp
-		const noteToRecover = notesState.byId[id]
-		const noteToRecoverTimestamp = noteToRecover.lastChangeAt
+		// Update Supabase backend 
+		const newTags = note.tags.filter((t) => t !== tag)
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				tags: newTags
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
 
-		// Use binary search to find index
-		/** @note Remember that byOrderActive is by timestamp DESCENDING! */
-		let lo = 0
-		let hi = notesState.byOrderActive.length - 1
-		while (lo < hi) {
-			// Get middle object's timestamp
-			let mid = Math.floor(lo + (hi - lo) / 2)
-			let midNote = notesState.byId[notesState.byOrderActive[mid]]
-			let midTimestamp = midNote.lastChangeAt
-
-			// If mid is less than our timestamp, adjust window left
-			if (midTimestamp <= noteToRecoverTimestamp) hi = mid
-			// Otherwise, adjust window right
-			else lo = mid + 1
-		}
-
-		// arr[lo] is the first element <= ourTimestamp
-		if (notesState.byId[notesState.byOrderActive[lo]].lastChangeAt > noteToRecoverTimestamp) return lo + 1
-		else return lo
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
 	}
 
+	async function saveEdit(id, newContent) {
+		// Update Supabase backend 
+		const now = new Date().toISOString()
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				content: newContent,
+				was_updated: true, 
+				updated_at: now,
+				last_change_at: now 
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
+
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
+	}
 	// Return NotesContext provider
 	return (
 		<NotesContext.Provider
-			value={{ notesState, setNotesState, deleteNote, togglePin, pinNote, unpinNote, recoverNote }}
+			value={{ notesState, setNotesState, deleteNote, togglePin, pinNote, unpinNote, recoverNote, addTag, deleteTag, saveEdit }}
 		>
 			{children}
 		</NotesContext.Provider>
