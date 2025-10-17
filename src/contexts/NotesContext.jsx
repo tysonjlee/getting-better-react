@@ -269,10 +269,27 @@ export function NotesProvider({ children }) {
 		await fetchNotes()
 	}
 
+	async function saveEdit(id, newContent) {
+		// Update Supabase backend 
+		const now = new Date().toISOString()
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				content: newContent,
+				was_updated: true, 
+				updated_at: now,
+				last_change_at: now 
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
+
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
+	}
 	// Return NotesContext provider
 	return (
 		<NotesContext.Provider
-			value={{ notesState, setNotesState, deleteNote, togglePin, pinNote, unpinNote, recoverNote, addTag, deleteTag }}
+			value={{ notesState, setNotesState, deleteNote, togglePin, pinNote, unpinNote, recoverNote, addTag, deleteTag, saveEdit }}
 		>
 			{children}
 		</NotesContext.Provider>
