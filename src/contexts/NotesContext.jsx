@@ -229,10 +229,50 @@ export function NotesProvider({ children }) {
 		await fetchNotes()
 	}
 
+	async function addTag(id, tag) {
+		const note = notesState.byId[id]
+
+		// If the tag is already added, exit 
+		if (note.tags.includes(tag)) return
+
+		// Update Supabase backend 
+		const newTags = [...note.tags, tag]
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				tags: newTags
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
+
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
+	}
+
+	async function deleteTag(id, tag) {
+		const note = notesState.byId[id]
+
+		// If the tag already isn't added, exit 
+		if (!note.tags.includes(tag)) return
+
+		// Update Supabase backend 
+		const newTags = note.tags.filter((t) => t !== tag)
+		const { error } = await supabase
+			.from('user_notes')
+			.update({ 
+				tags: newTags
+			})
+			.eq('note_id', id)
+		if (error) console.error(error)
+
+		// Call fetchNotes() to refresh 
+		await fetchNotes()
+	}
+
 	// Return NotesContext provider
 	return (
 		<NotesContext.Provider
-			value={{ notesState, setNotesState, deleteNote, togglePin, pinNote, unpinNote, recoverNote }}
+			value={{ notesState, setNotesState, deleteNote, togglePin, pinNote, unpinNote, recoverNote, addTag, deleteTag }}
 		>
 			{children}
 		</NotesContext.Provider>
