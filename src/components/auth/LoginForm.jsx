@@ -5,8 +5,10 @@ import { Label } from '@/components/ui/Label'
 import supabase from '@/lib/supabaseClient'
 import { useState } from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
+import { useNotes } from '@/contexts/NotesContext'
 
 function LoginForm({ setShowLogin, setShowSignup, setShowForgotPassword }) {
+	const { fetchNotes } = useNotes()
 	const [email, setEmail] = useState('') // User's email
 	const [password, setPassword] = useState('') // User's password
 	const [error, setError] = useState(null) // For showing error message if invalid login
@@ -14,6 +16,8 @@ function LoginForm({ setShowLogin, setShowSignup, setShowForgotPassword }) {
 	const handleLogin = async () => {
 		const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password })
 		if (error) setError(error.message)
+
+		fetchNotes() // Call fetchNotes() to display notes upon login
 	}
 
 	function handleSignup() {

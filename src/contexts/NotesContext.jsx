@@ -287,6 +287,7 @@ export function NotesProvider({ children }) {
 			value={{
 				notesState,
 				setNotesState,
+				fetchNotes,
 				deleteNote,
 				togglePin,
 				pinNote,
