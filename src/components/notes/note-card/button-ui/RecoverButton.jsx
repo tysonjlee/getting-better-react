@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { CiUndo } from 'react-icons/ci'
 import { useNotes } from '@/contexts/NotesContext'
 
-function RecoverButton({ id, setDialogOpen, setShowSaveButton}) {
+function RecoverButton({ id, setDialogOpen, setShowSaveButton }) {
 	const { recoverNote } = useNotes()
 
 	return (

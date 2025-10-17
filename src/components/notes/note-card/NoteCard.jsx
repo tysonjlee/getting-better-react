@@ -28,8 +28,8 @@ function NoteCard({ id }) {
 	const [showSaveButton, setShowSaveButton] = useState(!note.isDeleted)
 
 	function determineTitle() {
-		if (!note.isDeleted) return "Edit Note" 
-		else return "Preview Note"
+		if (!note.isDeleted) return 'Edit Note'
+		else return 'Preview Note'
 	}
 
 	function renderSimilarityAlert() {
@@ -50,8 +50,7 @@ function NoteCard({ id }) {
 					Save Note
 				</Button>
 			)
-		}
-		else return <></>
+		} else return <></>
 	}
 
 	function handleSaveNote() {
@@ -83,7 +82,7 @@ function NoteCard({ id }) {
 				<Card className="relative flex flex-col items-center justify-center min-w-72 min-h-40 border-[3px] border-solid border-black rounded-lg bg-midnight-container transition-all duration-200 hover:scale-105">
 					<NoteCardDisplayStatus isPinned={note.pinned} isDeleted={note.isDeleted} />
 					<CardContent className="text-foreground pt-5">{note.content}</CardContent>
-					<NoteCardDisplayTags id={id}/>
+					<NoteCardDisplayTags id={id} />
 				</Card>
 			</DialogTrigger>
 
@@ -105,8 +104,13 @@ function NoteCard({ id }) {
 						{renderSaveButton()}
 					</DialogDescription>
 				</DialogHeader>
-				<NoteCardDialogTags id={id}/>
-				<NoteCardDialogButtons isDeleted={note.isDeleted} id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
+				<NoteCardDialogTags id={id} />
+				<NoteCardDialogButtons
+					isDeleted={note.isDeleted}
+					id={id}
+					setDialogOpen={setDialogOpen}
+					setShowSaveButton={setShowSaveButton}
+				/>
 			</DialogContent>
 		</Dialog>
 	)

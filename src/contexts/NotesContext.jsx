@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react'
-import supabase from '@/lib/supabaseClient';
+import supabase from '@/lib/supabaseClient'
 
 export const initialNotesState = {
 	byId: {}, // Single truth source
@@ -15,7 +15,7 @@ export const initialNotesState = {
 	 *    "isDeleted": boolean
 	 *    "deletedAt": int (epoch) || null if not deleted
 	 *    "pinned": boolean
-	 * 		"tags": array of strings 
+	 * 		"tags": array of strings
 	 *   }
 	 *   ...
 	 * }
@@ -26,56 +26,56 @@ export const initialNotesState = {
 }
 
 export const tagNames = [
-  "Anxiety",
-  "Depression",
-  "Stress",
-  "Burnout",
-  "PTSD",
-  "OCD",
-  "Bipolar Disorder",
-  "ADHD",
-  "Insomnia",
-  "Grief",
-  "Anger",
-  "Self-Esteem",
-  "Loneliness",
-  "Mood Swings",
-  "Panic Attacks",
-  "Social Anxiety",
-  "Suicidal Thoughts",
-  "Self-Harm",
-  "Dissociation",
-  "Eating Disorder",
-  "Body Image",
-  "Perfectionism",
-  "Addiction",
-  "Substance Use",
-  "Intrusive Thoughts",
-  "Guilt",
-  "Shame",
-  "Hopelessness",
-  "Overthinking",
-  "Rumination",
-  "Relationship Issues",
-  "Fear of Failure",
-  "Motivation",
-  "Concentration Issues",
-  "Irritability",
-  "Trust Issues",
-  "Negative Self-Talk",
-  "Avoidance",
-  "Chronic Fatigue",
-  "Emotional Numbness",
-  "Work Stress",
-  "School Stress",
-  "Financial Stress",
-  "Life Transitions",
-  "Identity",
-  "Crisis",
-  "Mental Exhaustion",
-  "Overwhelm",
-  "Compulsive Behavior"
-];
+	'Anxiety',
+	'Depression',
+	'Stress',
+	'Burnout',
+	'PTSD',
+	'OCD',
+	'Bipolar Disorder',
+	'ADHD',
+	'Insomnia',
+	'Grief',
+	'Anger',
+	'Self-Esteem',
+	'Loneliness',
+	'Mood Swings',
+	'Panic Attacks',
+	'Social Anxiety',
+	'Suicidal Thoughts',
+	'Self-Harm',
+	'Dissociation',
+	'Eating Disorder',
+	'Body Image',
+	'Perfectionism',
+	'Addiction',
+	'Substance Use',
+	'Intrusive Thoughts',
+	'Guilt',
+	'Shame',
+	'Hopelessness',
+	'Overthinking',
+	'Rumination',
+	'Relationship Issues',
+	'Fear of Failure',
+	'Motivation',
+	'Concentration Issues',
+	'Irritability',
+	'Trust Issues',
+	'Negative Self-Talk',
+	'Avoidance',
+	'Chronic Fatigue',
+	'Emotional Numbness',
+	'Work Stress',
+	'School Stress',
+	'Financial Stress',
+	'Life Transitions',
+	'Identity',
+	'Crisis',
+	'Mental Exhaustion',
+	'Overwhelm',
+	'Compulsive Behavior'
+]
 
 export const NotesContext = createContext(null)
 
@@ -90,10 +90,12 @@ export function NotesProvider({ children }) {
 		fetchNotes()
 	})
 
-	// Define note functions 
+	// Define note functions
 	async function fetchNotes() {
-		// If the user isn't logged in, don't do anything 
-		const { data: { user } } = await supabase.auth.getUser()
+		// If the user isn't logged in, don't do anything
+		const {
+			data: { user }
+		} = await supabase.auth.getUser()
 		if (user === null) return
 
 		// Otherwise, populate notesState with the user's backend notes
@@ -108,10 +110,10 @@ export function NotesProvider({ children }) {
 		const byOrderActive = []
 		const byOrderPinned = []
 		const byOrderDeleted = []
-		
+
 		// Populate notesState for each note
 		for (const note of data) {
-			// Make new note structure 
+			// Make new note structure
 			const createdAt = new Date(note.created_at).getTime()
 			const updatedAt = note.updated_at ? new Date(note.updated_at).getTime() : null
 			const deletedAt = note.deleted_at ? new Date(note.deleted_at).getTime() : null
@@ -136,8 +138,7 @@ export function NotesProvider({ children }) {
 			else if (newNote.pinned) {
 				byOrderPinned.push(note.note_id)
 				byOrderActive.push(note.note_id)
-			}
-			else byOrderActive.push(note.note_id)
+			} else byOrderActive.push(note.note_id)
 		}
 
 		// Sort byOrderActive, byOrderPinned, & byOrderDeleted
@@ -159,18 +160,18 @@ export function NotesProvider({ children }) {
 		// If the note is already deleted, exit
 		if (notesState.byId[id].isDeleted) return
 
-		// Update Supabase backend 
+		// Update Supabase backend
 		const { error } = await supabase
 			.from('user_notes')
-			.update({ 
-				is_deleted: true, 
-				deleted_at: new Date().toISOString(), 
+			.update({
+				is_deleted: true,
+				deleted_at: new Date().toISOString(),
 				pinned: false
 			})
 			.eq('note_id', id)
 		if (error) console.error(error)
 
-		// Call fetchNotes() to refresh 
+		// Call fetchNotes() to refresh
 		await fetchNotes()
 	}
 
@@ -185,14 +186,11 @@ export function NotesProvider({ children }) {
 		// If the note is deleted or already pinned, exit
 		if (notesState.byId[id].isDeleted || notesState.byId[id].pinned) return
 
-		// Update Supabase backend 
-		const { error } = await supabase
-			.from('user_notes')
-			.update({ pinned: true })
-			.eq('note_id', id)
+		// Update Supabase backend
+		const { error } = await supabase.from('user_notes').update({ pinned: true }).eq('note_id', id)
 		if (error) console.error(error)
 
-		// Call fetchNotes() to refresh 
+		// Call fetchNotes() to refresh
 		await fetchNotes()
 	}
 
@@ -200,14 +198,11 @@ export function NotesProvider({ children }) {
 		// If the note is deleted or already unpinned, exit
 		if (notesState.byId[id].isDeleted || !notesState.byId[id].pinned) return
 
-		// Update Supabase backend 
-		const { error } = await supabase
-			.from('user_notes')
-			.update({ pinned: false })
-			.eq('note_id', id)
+		// Update Supabase backend
+		const { error } = await supabase.from('user_notes').update({ pinned: false }).eq('note_id', id)
 		if (error) console.error(error)
 
-		// Call fetchNotes() to refresh 
+		// Call fetchNotes() to refresh
 		await fetchNotes()
 	}
 
@@ -215,81 +210,92 @@ export function NotesProvider({ children }) {
 		// If the note isn't deleted, exit
 		if (!notesState.byId[id].isDeleted) return
 
-		// Update Supabase backend 
+		// Update Supabase backend
 		const { error } = await supabase
 			.from('user_notes')
-			.update({ 
-				is_deleted: false, 
+			.update({
+				is_deleted: false,
 				deleted_at: null
 			})
 			.eq('note_id', id)
 		if (error) console.error(error)
 
-		// Call fetchNotes() to refresh 
+		// Call fetchNotes() to refresh
 		await fetchNotes()
 	}
 
 	async function addTag(id, tag) {
 		const note = notesState.byId[id]
 
-		// If the tag is already added, exit 
+		// If the tag is already added, exit
 		if (note.tags.includes(tag)) return
 
-		// Update Supabase backend 
+		// Update Supabase backend
 		const newTags = [...note.tags, tag]
 		const { error } = await supabase
 			.from('user_notes')
-			.update({ 
+			.update({
 				tags: newTags
 			})
 			.eq('note_id', id)
 		if (error) console.error(error)
 
-		// Call fetchNotes() to refresh 
+		// Call fetchNotes() to refresh
 		await fetchNotes()
 	}
 
 	async function deleteTag(id, tag) {
 		const note = notesState.byId[id]
 
-		// If the tag already isn't added, exit 
+		// If the tag already isn't added, exit
 		if (!note.tags.includes(tag)) return
 
-		// Update Supabase backend 
+		// Update Supabase backend
 		const newTags = note.tags.filter((t) => t !== tag)
 		const { error } = await supabase
 			.from('user_notes')
-			.update({ 
+			.update({
 				tags: newTags
 			})
 			.eq('note_id', id)
 		if (error) console.error(error)
 
-		// Call fetchNotes() to refresh 
+		// Call fetchNotes() to refresh
 		await fetchNotes()
 	}
 
 	async function saveEdit(id, newContent) {
-		// Update Supabase backend 
+		// Update Supabase backend
 		const now = new Date().toISOString()
 		const { error } = await supabase
 			.from('user_notes')
-			.update({ 
+			.update({
 				content: newContent,
-				was_updated: true, 
+				was_updated: true,
 				updated_at: now,
-				last_change_at: now 
+				last_change_at: now
 			})
 			.eq('note_id', id)
 		if (error) console.error(error)
 
-		// Call fetchNotes() to refresh 
+		// Call fetchNotes() to refresh
 		await fetchNotes()
 	}
 	// Return NotesContext provider
 	return (
 		<NotesContext.Provider
-			value={{ notesState, setNotesState, deleteNote, togglePin, pinNote, unpinNote, recoverNote, addTag, deleteTag, saveEdit }}
+			value={{
+				notesState,
+				setNotesState,
+				deleteNote,
+				togglePin,
+				pinNote,
+				unpinNote,
+				recoverNote,
+				addTag,
+				deleteTag,
+				saveEdit
+			}}
 		>
 			{children}
 		</NotesContext.Provider>

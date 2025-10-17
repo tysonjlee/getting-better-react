@@ -1,38 +1,34 @@
-import { useNotes } from "@/contexts/NotesContext"
-import Tag from "@/components/notes/note-card/tag-ui/Tag"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/Popover"
-import { LuCircleFadingPlus } from "react-icons/lu";
-import TagAddMenu from "@/components/notes/note-card/tag-ui/TagAddMenu";
+import { useNotes } from '@/contexts/NotesContext'
+import Tag from '@/components/notes/note-card/tag-ui/Tag'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/Popover'
+import { LuCircleFadingPlus } from 'react-icons/lu'
+import TagAddMenu from '@/components/notes/note-card/tag-ui/TagAddMenu'
 
 function NoteCardDialogTags({ id }) {
-  const { notesState } = useNotes()
-  const note = notesState.byId[id]
-  const tags = note.tags
+	const { notesState } = useNotes()
+	const note = notesState.byId[id]
+	const tags = note.tags
 
-  return (
-    <div className="flex flex-row items-center flex-wrap min-w-[60%] gap-3">
-      {/* Individual Tags */}
-      {tags.map((tag) => (
-        <Tag key={tag} tag={tag} mode="delete" id={id}/>
-      ))}      
+	return (
+		<div className="flex flex-row items-center flex-wrap min-w-[60%] gap-3">
+			{/* Individual Tags */}
+			{tags.map((tag) => (
+				<Tag key={tag} tag={tag} mode="delete" id={id} />
+			))}
 
-      {/* Add Tag Button */}
-      <Popover>
-        <PopoverTrigger asChild>
-          <button>
-            <LuCircleFadingPlus size={18} />
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="max-h-60 max-w-96 h-full w-full mt-3 overflow-hidden bg-slate-950">
-          <TagAddMenu id={id}/>
-        </PopoverContent>
-      </Popover>
-    </div>
-  )
+			{/* Add Tag Button */}
+			<Popover>
+				<PopoverTrigger asChild>
+					<button>
+						<LuCircleFadingPlus size={18} />
+					</button>
+				</PopoverTrigger>
+				<PopoverContent className="max-h-60 max-w-96 h-full w-full mt-3 overflow-hidden bg-slate-950">
+					<TagAddMenu id={id} />
+				</PopoverContent>
+			</Popover>
+		</div>
+	)
 }
 
 export default NoteCardDialogTags

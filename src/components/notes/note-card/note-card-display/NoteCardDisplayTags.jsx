@@ -1,7 +1,5 @@
 function NoteCardDisplayTags({ id }) {
-  return (
-    <></>
-  )
+	return <></>
 }
 
 export default NoteCardDisplayTags

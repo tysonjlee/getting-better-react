@@ -8,7 +8,7 @@ function NoteCardDialogButtons({ isDeleted, id, setDialogOpen, setShowSaveButton
 	if (isDeleted) {
 		return (
 			<DialogFooter className="grid grid-cols-1">
-				<RecoverButton id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
+				<RecoverButton id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton} />
 			</DialogFooter>
 		)
 	}
@@ -18,7 +18,7 @@ function NoteCardDialogButtons({ isDeleted, id, setDialogOpen, setShowSaveButton
 		return (
 			<DialogFooter className="grid grid-cols-2 gap-2">
 				<PinButton id={id} />
-				<DeleteButton id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton}/>
+				<DeleteButton id={id} setDialogOpen={setDialogOpen} setShowSaveButton={setShowSaveButton} />
 			</DialogFooter>
 		)
 	}

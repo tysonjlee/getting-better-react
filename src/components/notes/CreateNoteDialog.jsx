@@ -40,25 +40,21 @@ function CreateNoteDialog() {
 			return
 		}
 
-		// Save note to Supabase table 
+		// Save note to Supabase table
 		const now = new Date().toISOString()
-		const { error } = await supabase
-			.from('user_notes')
-			.insert(
-				{
-					note_id: crypto.randomUUID(),
-					user_id: userId,
-					content: textareaContent,
-					created_at: now,
-					was_updated: false,
-					updated_at: null,
-					last_change_at: now,
-					is_deleted: false,
-					deleted_at: null,
-					pinned: false,
-					tags: []
-				}
-			);
+		const { error } = await supabase.from('user_notes').insert({
+			note_id: crypto.randomUUID(),
+			user_id: userId,
+			content: textareaContent,
+			created_at: now,
+			was_updated: false,
+			updated_at: null,
+			last_change_at: now,
+			is_deleted: false,
+			deleted_at: null,
+			pinned: false,
+			tags: []
+		})
 		if (error) console.error(error)
 
 		// Reset states
