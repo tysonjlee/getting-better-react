@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button"
 import { Link } from "react-router-dom"
 
-function HeroSection () {
+function HeroSection() {
   return (
     <div className="flex flex-col items-center justify-center w-[95%] gap-5 py-6 rounded-lg bg-slate-800 border-4 border-slate-900"> 
       <div className="flex flex-row items-center justify-center w-[50%] gap-6">
