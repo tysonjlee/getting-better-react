@@ -1,6 +1,10 @@
+import HeroSection from "./HeroSection"
+
 function Landing() {
   return (
-    <p>This is the landing page!</p>
+    <div className="flex flex-col justify-center items-center py-2">
+      <HeroSection />
+    </div>
   )
 }
 
