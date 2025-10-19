@@ -1,6 +1,7 @@
 import HeroSection from "./HeroSection"
 import MissionSection from "./MissionSection"
 import FeaturesSection from "./FeaturesSection"
+import Footer from "./Footer"
 
 function Landing() {
   return (
@@ -8,6 +9,7 @@ function Landing() {
       <HeroSection />
       <MissionSection />
       <FeaturesSection />
+      <Footer />
     </div>
   )
 }
