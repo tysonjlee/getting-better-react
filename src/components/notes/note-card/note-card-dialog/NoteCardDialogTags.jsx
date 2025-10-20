@@ -10,7 +10,7 @@ function NoteCardDialogTags({ id }) {
 	const tags = note.tags
 
 	return (
-		<div className="flex flex-row items-center flex-wrap min-w-[60%] gap-3">
+		<div className="flex flex-row items-center flex-wrap min-w-[60%] gap-3 pt-4">
 			{/* Individual Tags */}
 			{tags.map((tag) => (
 				<Tag key={tag} tag={tag} mode="delete" id={id} />
