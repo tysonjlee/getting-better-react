@@ -23,7 +23,7 @@ function UserAuthentication() {
 		else if (showForgotPassword) return <ForgotPasswordForm {...authProps} />
 	}
 
-	return <div className="flex w-screen h-screen justify-center items-center">{handleShowComponent()}</div>
+	return <div className="flex w-full min-h-screen h-full overflow-hidden justify-center items-center">{handleShowComponent()}</div>
 }
 
 export default UserAuthentication
